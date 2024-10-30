@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'nu.studer.jooq' version '8.2' // jOOQ Gradle Plugin for code generation
 }
 
 group = 'com.example'
@@ -29,16 +30,58 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// Spring Data JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
+	implementation 'mysql:mysql-connector-java:8.0.33'
 	// JOOQ
 	implementation 'org.springframework.boot:spring-boot-starter-jooq'
+	jooqGenerator 'mysql:mysql-connector-java:8.0.33'
+	// https://mvnrepository.com/artifact/org.jooq.jooq-codegen-gradle/org.jooq.jooq-codegen-gradle.gradle.plugin
+	implementation group: 'org.jooq.jooq-codegen-gradle', name: 'org.jooq.jooq-codegen-gradle.gradle.plugin', version: '3.19.14', ext: 'pom'
+}
+jooq {
+	version = dependencyManagement.importedProperties['jooq.version']
+	// Uses version defined in Spring Boot dependency management
 
+	configurations {
+		main { // Main jOOQ configuration
+			generationTool {
+				logging = org.jooq.meta.jaxb.Logging.WARN
+				jdbc {
+					driver = 'com.mysql.cj.jdbc.Driver'
+					url = 'jdbc:mysql://localhost:3306/ch3'
+					user = 'boost'
+					password = 'boost'
+				}
+				generator {
+					name = 'org.jooq.codegen.DefaultGenerator'
+					database {
+						name = 'org.jooq.meta.mysql.MySQLDatabase'
+						inputSchema = 'ch3'
+						includes = '.*'
+						excludes = ''
+					}
+					target {
+						packageName = 'com.example.jooq.generated'
+						directory = 'src/main/generated'
+					}
+				}
+			}
+		}
+	}
 }
 
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java', 'src/main/generated']
+		}
+	}
+}
+def generatedDir = file("src/main/java/com/example/jooq/generated")
 tasks.named('test') {
 	useJUnitPlatform()
 }
