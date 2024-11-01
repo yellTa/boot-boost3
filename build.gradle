@@ -44,10 +44,9 @@ dependencies {
 }
 jooq {
 	version = dependencyManagement.importedProperties['jooq.version']
-	// Uses version defined in Spring Boot dependency management
 
 	configurations {
-		main { // Main jOOQ configuration
+		main {
 			generationTool {
 				logging = org.jooq.meta.jaxb.Logging.WARN
 				jdbc {
@@ -65,7 +64,7 @@ jooq {
 						excludes = ''
 					}
 					target {
-						packageName = 'com.example.jooq.generated'
+						packageName = 'com.yeji.jooq.generated'
 						directory = 'src/main/generated'
 					}
 				}
@@ -81,7 +80,11 @@ sourceSets {
 		}
 	}
 }
-def generatedDir = file("src/main/java/com/example/jooq/generated")
+
+compileJava {
+	options.compilerArgs += ['-sourcepath', sourceSets.main.java.srcDirs.join(':')]
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
