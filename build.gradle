@@ -1,8 +1,8 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.5'
+	id 'org.springframework.boot' version '3.2.7'
 	id 'io.spring.dependency-management' version '1.1.6'
-	id 'nu.studer.jooq' version '8.2' // jOOQ Gradle Plugin for code generation
+	id 'nu.studer.jooq' version '8.2' // jOOQ code gen plugin
 }
 
 group = 'com.example'
@@ -25,7 +25,6 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -33,15 +32,18 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	// Spring Data JPA
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//mysql connector 설정
 	implementation 'mysql:mysql-connector-java:8.0.33'
+
 	// JOOQ
 	implementation 'org.springframework.boot:spring-boot-starter-jooq'
 	jooqGenerator 'mysql:mysql-connector-java:8.0.33'
-	// https://mvnrepository.com/artifact/org.jooq.jooq-codegen-gradle/org.jooq.jooq-codegen-gradle.gradle.plugin
+
+	// Jooq Code gen 의존성 추가
 	implementation group: 'org.jooq.jooq-codegen-gradle', name: 'org.jooq.jooq-codegen-gradle.gradle.plugin', version: '3.19.14', ext: 'pom'
+
 }
+
 jooq {
 	version = dependencyManagement.importedProperties['jooq.version']
 
@@ -65,18 +67,10 @@ jooq {
 					}
 					target {
 						packageName = 'com.yeji.jooq.generated'
-						directory = 'src/main/generated'
+						directory = 'build/generated-src/main/java'
 					}
 				}
 			}
-		}
-	}
-}
-
-sourceSets {
-	main {
-		java {
-			srcDirs = ['src/main/java', 'src/main/generated']
 		}
 	}
 }
