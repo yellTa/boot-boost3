@@ -42,6 +42,8 @@ dependencies {
 	// Jooq Code gen 의존성 추가
 	implementation group: 'org.jooq.jooq-codegen-gradle', name: 'org.jooq.jooq-codegen-gradle.gradle.plugin', version: '3.19.14', ext: 'pom'
 
+    //swagger
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.3'
 }
 
 jooq {
