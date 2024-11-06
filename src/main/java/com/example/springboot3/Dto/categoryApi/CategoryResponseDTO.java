@@ -1,16 +1,14 @@
 package com.example.springboot3.Dto.categoryApi;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class CategoryResponseDTO {
 
     private int size;
-    private List<CategoryItemDTO> items;
+    private List<CategoryItemDTO> categoryItemList;
 
-    public CategoryResponseDTO(int size, List<CategoryItemDTO> items) {
-        this.size = size;
-        this.items = items;
-    }
 }
