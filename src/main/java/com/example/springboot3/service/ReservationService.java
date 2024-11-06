@@ -3,6 +3,7 @@ package com.example.springboot3.service;
 import com.example.springboot3.Dao.ReservationDao;
 import com.example.springboot3.Dto.categoryApi.CategoryItemDTO;
 import com.example.springboot3.Dto.displayInfoApi.DisplayInfoItemDTO;
+import com.example.springboot3.Dto.promotionApi.PromotionItemDTO;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ public class ReservationService {
 
     private final ReservationDao reservationDao;
 
-    public List<CategoryItemDTO> getCategoryInfoWithProductCount(){
+    public List<CategoryItemDTO> getCategoryInfoWithProductCount() {
         return reservationDao.getCategoryWithProductCount();
     }
 
@@ -40,4 +41,9 @@ public class ReservationService {
         }
         return result;
     }
+
+    public List<PromotionItemDTO> getPromotionItems() {
+        return reservationDao.getPromotionItemInfo();
+    }
+
 }

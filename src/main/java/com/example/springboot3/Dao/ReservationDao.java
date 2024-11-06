@@ -4,9 +4,11 @@ import static com.yeji.jooq.generated.tables.Category.CATEGORY;
 import static com.yeji.jooq.generated.tables.DisplayInfo.DISPLAY_INFO;
 import static com.yeji.jooq.generated.tables.Product.PRODUCT;
 import static com.yeji.jooq.generated.tables.ProductImage.PRODUCT_IMAGE;
+import static com.yeji.jooq.generated.tables.Promotion.PROMOTION;
 
 import com.example.springboot3.Dto.categoryApi.CategoryItemDTO;
 import com.example.springboot3.Dto.displayInfoApi.DisplayInfoItemDTO;
+import com.example.springboot3.Dto.promotionApi.PromotionItemDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
@@ -128,5 +130,25 @@ public class ReservationDao {
 
         return count != null ? count : 0;
 
+    }
+
+    public List<PromotionItemDTO> getPromotionItemInfo() {
+        return dsl.select(
+                PROMOTION.ID.as("id"),
+                PRODUCT.ID.as("productId"),
+                CATEGORY.ID.as("categoryId"),
+                CATEGORY.NAME.as("categoryName"),
+                PRODUCT.DESCRIPTION.as("description"),
+                PRODUCT_IMAGE.FILE_ID.as("field")
+            )
+            .from(CATEGORY)
+            .join(PRODUCT)
+            .on(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
+            .join(PRODUCT_IMAGE)
+            .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
+            .join(PROMOTION)
+            .on(PRODUCT.ID.eq(PROMOTION.PRODUCT_ID))
+            .where(PRODUCT_IMAGE.TYPE.eq("ma"))
+            .fetchInto(PromotionItemDTO.class);
     }
 }

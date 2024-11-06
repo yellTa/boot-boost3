@@ -4,6 +4,8 @@ import com.example.springboot3.Dto.categoryApi.CategoryItemDTO;
 import com.example.springboot3.Dto.categoryApi.CategoryResponseDTO;
 import com.example.springboot3.Dto.displayInfoApi.DisplayInfoItemDTO;
 import com.example.springboot3.Dto.displayInfoApi.DisplayInfoResponseDTO;
+import com.example.springboot3.Dto.promotionApi.PromotionItemDTO;
+import com.example.springboot3.Dto.promotionApi.PromotionResponseDTO;
 import com.example.springboot3.service.ReservationService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +28,7 @@ public class MainController {
     }
 
     @GetMapping("/api/displayInfos")
-    public DisplayInfoResponseDTO displayInfos(
-        @RequestParam(value = "categoryId", required = false) Integer categoryId,
+    public DisplayInfoResponseDTO displayInfos(@RequestParam(value = "categoryId", required = false) Integer categoryId,
         @RequestParam(value = "start", defaultValue = "0") int start) {
 
         int allDisplayInfoCount = reservationService.getAllDisplayInfoCount(categoryId);
@@ -39,5 +40,14 @@ public class MainController {
 
         return displayInfoResponseDTO;
     }
+
+    @GetMapping("/api/promotions")
+    public PromotionResponseDTO promotionList() {
+        List<PromotionItemDTO> promotionItems = reservationService.getPromotionItems();
+        PromotionResponseDTO promotionResponseDTO = new PromotionResponseDTO(promotionItems.size(), promotionItems);
+
+        return promotionResponseDTO;
+    }
+
 
 }
