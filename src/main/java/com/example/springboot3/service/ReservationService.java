@@ -7,6 +7,8 @@ import com.example.springboot3.Dto.DisplayInfoItemDTO;
 import com.example.springboot3.Dto.ProductImageDTO;
 import com.example.springboot3.Dto.ProductPriceDTO;
 import com.example.springboot3.Dto.PromotionItemDTO;
+import com.example.springboot3.Dto.ReservationUserCommentDTO;
+import com.example.springboot3.Dto.ReservationUserCommentImageDTO;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -67,6 +69,24 @@ public class ReservationService {
 
     public List<ProductPriceDTO> getProductPriceWithDisplayId(int displayId) {
         return reservationDao.getProductPricesOrderByRateDesc(displayId);
+    }
+
+    public int getTotalCommentCount() {
+        return reservationDao.getCommentTotalCount();
+    }
+
+    public List<ReservationUserCommentDTO> getReservationUserCommentWithProductId(int productId, int start) {
+        List<ReservationUserCommentDTO> reservationUserComments = reservationDao.getReservationUserCommentWithProductId(
+            productId, start);
+
+        for (ReservationUserCommentDTO reservationUserComment : reservationUserComments) {
+            int reservationInfoId = reservationUserComment.getReservationInfoId();
+            List<ReservationUserCommentImageDTO> reservationUserCommentImages = reservationDao.getReservationUserCommentImageWithReservationInfoId(
+                reservationInfoId);
+
+            reservationUserComment.setReservationUserCommentImages(reservationUserCommentImages);
+        }
+        return reservationUserComments;
     }
 
 }

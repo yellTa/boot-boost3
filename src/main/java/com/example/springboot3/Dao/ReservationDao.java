@@ -8,7 +8,9 @@ import static com.yeji.jooq.generated.tables.Product.PRODUCT;
 import static com.yeji.jooq.generated.tables.ProductImage.PRODUCT_IMAGE;
 import static com.yeji.jooq.generated.tables.ProductPrice.PRODUCT_PRICE;
 import static com.yeji.jooq.generated.tables.Promotion.PROMOTION;
+import static com.yeji.jooq.generated.tables.ReservationInfo.RESERVATION_INFO;
 import static com.yeji.jooq.generated.tables.ReservationUserComment.RESERVATION_USER_COMMENT;
+import static com.yeji.jooq.generated.tables.ReservationUserCommentImage.RESERVATION_USER_COMMENT_IMAGE;
 
 import com.example.springboot3.Dto.CategoryItemDTO;
 import com.example.springboot3.Dto.DisplayInfoImageDTO;
@@ -16,6 +18,8 @@ import com.example.springboot3.Dto.DisplayInfoItemDTO;
 import com.example.springboot3.Dto.ProductImageDTO;
 import com.example.springboot3.Dto.ProductPriceDTO;
 import com.example.springboot3.Dto.PromotionItemDTO;
+import com.example.springboot3.Dto.ReservationUserCommentDTO;
+import com.example.springboot3.Dto.ReservationUserCommentImageDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
@@ -264,5 +268,41 @@ public class ReservationDao {
             .where(PRODUCT_PRICE.PRODUCT_ID.eq(displayId))
             .orderBy(PRODUCT_PRICE.DISCOUNT_RATE.desc())
             .fetchInto(ProductPriceDTO.class);
+    }
+
+    public int getCommentTotalCount() {
+        Integer count = dsl.selectCount()
+            .from(RESERVATION_USER_COMMENT)
+            .fetchOne(0, int.class);
+        return count != null ? count : 0;
+    }
+
+    public List<ReservationUserCommentDTO> getReservationUserCommentWithProductId(int productId, int start) {
+        return dsl.select(
+                RESERVATION_USER_COMMENT.RESERVATION_INFO_ID.as("id"),
+                RESERVATION_INFO.PRODUCT_ID.as("productId"),
+                RESERVATION_USER_COMMENT.RESERVATION_INFO_ID.as("reservationInfoId"),
+                RESERVATION_USER_COMMENT.SCORE.as("score"),
+                RESERVATION_INFO.RESERVATION_EMAIL.as("email"),
+                RESERVATION_USER_COMMENT.COMMENT.as("comment"),
+                RESERVATION_USER_COMMENT.CREATE_DATE.as("createDate"),
+                RESERVATION_USER_COMMENT.MODIFY_DATE.as("modifyDate")
+            )
+            .from(RESERVATION_INFO)
+            .join(RESERVATION_USER_COMMENT)
+            .on(RESERVATION_INFO.PRODUCT_ID.eq(RESERVATION_USER_COMMENT.PRODUCT_ID)
+                .and(RESERVATION_INFO.ID.eq(RESERVATION_USER_COMMENT.RESERVATION_INFO_ID)))
+            .where(RESERVATION_INFO.PRODUCT_ID.eq(productId))
+            .orderBy(RESERVATION_USER_COMMENT.RESERVATION_INFO_ID.desc())
+            .limit(5)
+            .offset(start)
+            .fetchInto(ReservationUserCommentDTO.class);
+    }
+
+    public List<ReservationUserCommentImageDTO> getReservationUserCommentImageWithReservationInfoId(
+        int reservationInfoId) {
+        return dsl.selectFrom(RESERVATION_USER_COMMENT_IMAGE)
+            .where(RESERVATION_USER_COMMENT_IMAGE.RESERVATION_INFO_ID.eq(reservationInfoId))
+            .fetchInto(ReservationUserCommentImageDTO.class);
     }
 }

@@ -4,6 +4,8 @@ import com.example.springboot3.Dto.DisplayInfoImageDTO;
 import com.example.springboot3.Dto.DisplayInfoItemDTO;
 import com.example.springboot3.Dto.ProductImageDTO;
 import com.example.springboot3.Dto.ProductPriceDTO;
+import com.example.springboot3.Dto.ReservationUserCommentDTO;
+import com.example.springboot3.Dto.response.CommentsReponseDTO;
 import com.example.springboot3.Dto.response.DetailResponseDTO;
 import com.example.springboot3.service.ReservationService;
 import java.util.List;
@@ -19,8 +21,7 @@ public class DetailController {
     private final ReservationService reservationService;
 
     @GetMapping("/api/displayinfos")
-    public DetailResponseDTO detailedDisplayInfo(
-        @RequestParam(value = "displayId", required = false) int displayId) {
+    public DetailResponseDTO detailedDisplayInfo(@RequestParam(value = "displayId", required = false) int displayId) {
 
         DisplayInfoItemDTO product = reservationService.getDisplayInfoWithDisplayId(displayId);
         List<ProductImageDTO> productImages = reservationService.getProductImageWithDisplayId(displayId);
@@ -28,10 +29,22 @@ public class DetailController {
         int avgScore = reservationService.getAvgScoreWithDisplayId(displayId);
         List<ProductPriceDTO> productPrices = reservationService.getProductPriceWithDisplayId(displayId);
 
-        DetailResponseDTO detailResponseDTO = new DetailResponseDTO(product, productImages, displayInfoImages, avgScore,
+        return new DetailResponseDTO(product, productImages, displayInfoImages, avgScore,
             productPrices);
 
-        return detailResponseDTO;
     }
 
+    @GetMapping("/api/comments")
+    public CommentsReponseDTO commentResponse(
+        @RequestParam(value = "productId", required = false) int productId,
+        @RequestParam(value = "start", defaultValue = "0") int start) {
+
+        int totalCommentCount = reservationService.getTotalCommentCount();
+        List<ReservationUserCommentDTO> reservationUserCommentWithProductId = reservationService.getReservationUserCommentWithProductId(
+            productId, start);
+
+        return new CommentsReponseDTO(totalCommentCount, reservationUserCommentWithProductId.size(),
+            reservationUserCommentWithProductId);
+
+    }
 }
