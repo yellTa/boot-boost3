@@ -3,8 +3,8 @@ package com.example.springboot3.web;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import com.example.springboot3.Dto.displayInfoApi.DisplayInfoItemDTO;
-import com.example.springboot3.Dto.displayInfoApi.DisplayInfoResponseDTO;
+import com.example.springboot3.Dto.DisplayInfoItemDTO;
+import com.example.springboot3.Dto.response.DisplayInfoResponseDTO;
 import com.example.springboot3.service.ReservationService;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ExtendWith(MockitoExtension.class)
 class MainControllerTest {
+
     private MockMvc mockMvc;
 
     @Mock
@@ -31,7 +32,8 @@ class MainControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(mainController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(mainController)
+            .build();
     }
 
     @Test
@@ -50,22 +52,22 @@ class MainControllerTest {
                 "콘서트",
                 "2017버즈전국투어콘서트 'JUST ONE'",
                 """
-                버즈와 함께하는 단 하나의 특별한 시간 JUST ONE
-                2017년 연말을 더욱 따뜻한 이야기로 그려낼 JUST ONE
-                가장 멋진 내일이 시작될 순간 JUST ONE
-                2017 BUZZ CONCERT JUST ONE
-        
-                버즈 전국투어 콘서트 [JUST ONE]이 시작됩니다.
-                미니앨범 BE ONE 발매와 함께 많은 사랑을 받은 버즈가
-                전국 투어 콘서트로 여러분을 찾아갑니다.
-        
-                ‘사랑하지 않은 것처럼’을 비롯한 미니앨범의 신곡들은 물론.
-                남자를 몰라,겁쟁이, 나에게로 떠나는 여행등
-                노래방 인기순위 랭킹의 곡들을 버즈와 함께 떼창 하는 시간!
-                넘치는 흥을 주체할 수 없도록 신나게 달릴 메들리 곡들까지 만나볼 수 있는 다채로운 콘서트!
-        
-                2017년, 여러분의 연말을 가장 특별하게 마무리 할 단 하나의 공연 JUST ONE
-                Band 버즈의 빛나는 모습으로 가득할 공연장으로 여러분을 초대합니다.""",
+                    버즈와 함께하는 단 하나의 특별한 시간 JUST ONE
+                    2017년 연말을 더욱 따뜻한 이야기로 그려낼 JUST ONE
+                    가장 멋진 내일이 시작될 순간 JUST ONE
+                    2017 BUZZ CONCERT JUST ONE
+                            
+                    버즈 전국투어 콘서트 [JUST ONE]이 시작됩니다.
+                    미니앨범 BE ONE 발매와 함께 많은 사랑을 받은 버즈가
+                    전국 투어 콘서트로 여러분을 찾아갑니다.
+                            
+                    ‘사랑하지 않은 것처럼’을 비롯한 미니앨범의 신곡들은 물론.
+                    남자를 몰라,겁쟁이, 나에게로 떠나는 여행등
+                    노래방 인기순위 랭킹의 곡들을 버즈와 함께 떼창 하는 시간!
+                    넘치는 흥을 주체할 수 없도록 신나게 달릴 메들리 곡들까지 만나볼 수 있는 다채로운 콘서트!
+                            
+                    2017년, 여러분의 연말을 가장 특별하게 마무리 할 단 하나의 공연 JUST ONE
+                    Band 버즈의 빛나는 모습으로 가득할 공연장으로 여러분을 초대합니다.""",
                 null,
                 "12월 17일(일) PM5",
                 "KBS부산홀",
@@ -85,22 +87,22 @@ class MainControllerTest {
                 "콘서트",
                 "2017버즈전국투어콘서트 'JUST ONE'",
                 """
-                버즈와 함께하는 단 하나의 특별한 시간 JUST ONE
-                2017년 연말을 더욱 따뜻한 이야기로 그려낼 JUST ONE
-                가장 멋진 내일이 시작될 순간 JUST ONE
-                2017 BUZZ CONCERT JUST ONE
-        
-                버즈 전국투어 콘서트 [JUST ONE]이 시작됩니다.
-                미니앨범 BE ONE 발매와 함께 많은 사랑을 받은 버즈가
-                전국 투어 콘서트로 여러분을 찾아갑니다.
-        
-                ‘사랑하지 않은 것처럼’을 비롯한 미니앨범의 신곡들은 물론.
-                남자를 몰라,겁쟁이, 나에게로 떠나는 여행등
-                노래방 인기순위 랭킹의 곡들을 버즈와 함께 떼창 하는 시간!
-                넘치는 흥을 주체할 수 없도록 신나게 달릴 메들리 곡들까지 만나볼 수 있는 다채로운 콘서트!
-        
-                2017년, 여러분의 연말을 가장 특별하게 마무리 할 단 하나의 공연 JUST ONE
-                Band 버즈의 빛나는 모습으로 가득할 공연장으로 여러분을 초대합니다.""",
+                    버즈와 함께하는 단 하나의 특별한 시간 JUST ONE
+                    2017년 연말을 더욱 따뜻한 이야기로 그려낼 JUST ONE
+                    가장 멋진 내일이 시작될 순간 JUST ONE
+                    2017 BUZZ CONCERT JUST ONE
+                            
+                    버즈 전국투어 콘서트 [JUST ONE]이 시작됩니다.
+                    미니앨범 BE ONE 발매와 함께 많은 사랑을 받은 버즈가
+                    전국 투어 콘서트로 여러분을 찾아갑니다.
+                            
+                    ‘사랑하지 않은 것처럼’을 비롯한 미니앨범의 신곡들은 물론.
+                    남자를 몰라,겁쟁이, 나에게로 떠나는 여행등
+                    노래방 인기순위 랭킹의 곡들을 버즈와 함께 떼창 하는 시간!
+                    넘치는 흥을 주체할 수 없도록 신나게 달릴 메들리 곡들까지 만나볼 수 있는 다채로운 콘서트!
+                            
+                    2017년, 여러분의 연말을 가장 특별하게 마무리 할 단 하나의 공연 JUST ONE
+                    Band 버즈의 빛나는 모습으로 가득할 공연장으로 여러분을 초대합니다.""",
                 null,
                 "12월 23일(토) PM7 , 24일(일) PM5",
                 "경북대학교 대강당",

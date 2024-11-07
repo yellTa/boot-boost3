@@ -1,4 +1,4 @@
-package com.example.springboot3.Dto.detailApi;
+package com.example.springboot3.Dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
@@ -7,16 +7,13 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ProductImageDTO {
+public class ProductPriceDTO {
 
+    private int id;
     private int productId;
-    private int productImageId;
-    private String type;
-    private int fileInfoId;
-    private String fileName;
-    private String saveFileName;
-    private String contentType;
-    private int deleteFlag;
+    private String priceTypeName;
+    private int price;
+    private int discountRate;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private LocalDateTime createDate;

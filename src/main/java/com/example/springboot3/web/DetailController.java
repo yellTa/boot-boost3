@@ -1,10 +1,10 @@
 package com.example.springboot3.web;
 
-import com.example.springboot3.Dto.detailApi.DetailResponseDTO;
-import com.example.springboot3.Dto.detailApi.DisplayInfoImageDTO;
-import com.example.springboot3.Dto.detailApi.ProductImageDTO;
-import com.example.springboot3.Dto.detailApi.ProductPriceDTO;
-import com.example.springboot3.Dto.displayInfoApi.DisplayInfoItemDTO;
+import com.example.springboot3.Dto.DisplayInfoImageDTO;
+import com.example.springboot3.Dto.DisplayInfoItemDTO;
+import com.example.springboot3.Dto.ProductImageDTO;
+import com.example.springboot3.Dto.ProductPriceDTO;
+import com.example.springboot3.Dto.response.DetailResponseDTO;
 import com.example.springboot3.service.ReservationService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

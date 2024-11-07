@@ -1,6 +1,9 @@
-package com.example.springboot3.Dto.detailApi;
+package com.example.springboot3.Dto.response;
 
-import com.example.springboot3.Dto.displayInfoApi.DisplayInfoItemDTO;
+import com.example.springboot3.Dto.DisplayInfoImageDTO;
+import com.example.springboot3.Dto.DisplayInfoItemDTO;
+import com.example.springboot3.Dto.ProductImageDTO;
+import com.example.springboot3.Dto.ProductPriceDTO;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

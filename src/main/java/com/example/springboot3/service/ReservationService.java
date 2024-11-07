@@ -1,12 +1,12 @@
 package com.example.springboot3.service;
 
 import com.example.springboot3.Dao.ReservationDao;
-import com.example.springboot3.Dto.categoryApi.CategoryItemDTO;
-import com.example.springboot3.Dto.detailApi.DisplayInfoImageDTO;
-import com.example.springboot3.Dto.detailApi.ProductImageDTO;
-import com.example.springboot3.Dto.detailApi.ProductPriceDTO;
-import com.example.springboot3.Dto.displayInfoApi.DisplayInfoItemDTO;
-import com.example.springboot3.Dto.promotionApi.PromotionItemDTO;
+import com.example.springboot3.Dto.CategoryItemDTO;
+import com.example.springboot3.Dto.DisplayInfoImageDTO;
+import com.example.springboot3.Dto.DisplayInfoItemDTO;
+import com.example.springboot3.Dto.ProductImageDTO;
+import com.example.springboot3.Dto.ProductPriceDTO;
+import com.example.springboot3.Dto.PromotionItemDTO;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

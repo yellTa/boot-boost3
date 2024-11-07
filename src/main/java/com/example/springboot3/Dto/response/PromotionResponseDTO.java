@@ -1,5 +1,6 @@
-package com.example.springboot3.Dto.promotionApi;
+package com.example.springboot3.Dto.response;
 
+import com.example.springboot3.Dto.PromotionItemDTO;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

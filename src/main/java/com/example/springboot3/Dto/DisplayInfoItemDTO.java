@@ -1,4 +1,4 @@
-package com.example.springboot3.Dto.displayInfoApi;
+package com.example.springboot3.Dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
@@ -29,7 +29,7 @@ public class DisplayInfoItemDTO {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private LocalDateTime modifyDate;
-    
+
     private int field;
 
 }

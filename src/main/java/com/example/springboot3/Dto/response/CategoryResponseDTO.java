@@ -1,5 +1,6 @@
-package com.example.springboot3.Dto.categoryApi;
+package com.example.springboot3.Dto.response;
 
+import com.example.springboot3.Dto.CategoryItemDTO;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

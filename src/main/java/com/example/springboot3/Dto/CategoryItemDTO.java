@@ -1,4 +1,4 @@
-package com.example.springboot3.Dto.categoryApi;
+package com.example.springboot3.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,11 +1,11 @@
 package com.example.springboot3.web;
 
-import com.example.springboot3.Dto.categoryApi.CategoryItemDTO;
-import com.example.springboot3.Dto.categoryApi.CategoryResponseDTO;
-import com.example.springboot3.Dto.displayInfoApi.DisplayInfoItemDTO;
-import com.example.springboot3.Dto.displayInfoApi.DisplayInfoResponseDTO;
-import com.example.springboot3.Dto.promotionApi.PromotionItemDTO;
-import com.example.springboot3.Dto.promotionApi.PromotionResponseDTO;
+import com.example.springboot3.Dto.CategoryItemDTO;
+import com.example.springboot3.Dto.DisplayInfoItemDTO;
+import com.example.springboot3.Dto.PromotionItemDTO;
+import com.example.springboot3.Dto.response.CategoryResponseDTO;
+import com.example.springboot3.Dto.response.DisplayInfoResponseDTO;
+import com.example.springboot3.Dto.response.PromotionResponseDTO;
 import com.example.springboot3.service.ReservationService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

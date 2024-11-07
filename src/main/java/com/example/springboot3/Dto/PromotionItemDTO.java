@@ -1,4 +1,4 @@
-package com.example.springboot3.Dto.promotionApi;
+package com.example.springboot3.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-import com.example.springboot3.Dto.categoryApi.CategoryItemDTO;
+import com.example.springboot3.Dto.CategoryItemDTO;
 import com.example.springboot3.service.ReservationService;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 class ReservationDaoTest {
+
     @Mock
     private ReservationDao reservationDao;
 
@@ -23,7 +24,7 @@ class ReservationDaoTest {
     private ReservationService reservationService;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
@@ -45,8 +46,10 @@ class ReservationDaoTest {
         assertEquals(mockData.size(), result.size(), "Mock데이터와 실제 결과의 크기가 같지 않음");
 
         // 특정 데이터 검증
-        assertEquals("전시", result.get(0).getName());
-        assertEquals(10, result.get(0).getCount());
+        assertEquals("전시", result.get(0)
+            .getName());
+        assertEquals(10, result.get(0)
+            .getCount());
 
     }
 
