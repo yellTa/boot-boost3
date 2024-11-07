@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class DisplayInfoItemDTO {
 
-    private String id;
+    private int id;
     private int categoryId;
     private int displayInfoId;
     private String name;
@@ -29,7 +29,7 @@ public class DisplayInfoItemDTO {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private LocalDateTime modifyDate;
-
-    int fileId;
+    
+    private int field;
 
 }

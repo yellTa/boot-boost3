@@ -2,6 +2,9 @@ package com.example.springboot3.service;
 
 import com.example.springboot3.Dao.ReservationDao;
 import com.example.springboot3.Dto.categoryApi.CategoryItemDTO;
+import com.example.springboot3.Dto.detailApi.DisplayInfoImageDTO;
+import com.example.springboot3.Dto.detailApi.ProductImageDTO;
+import com.example.springboot3.Dto.detailApi.ProductPriceDTO;
 import com.example.springboot3.Dto.displayInfoApi.DisplayInfoItemDTO;
 import com.example.springboot3.Dto.promotionApi.PromotionItemDTO;
 import java.util.ArrayList;
@@ -44,6 +47,26 @@ public class ReservationService {
 
     public List<PromotionItemDTO> getPromotionItems() {
         return reservationDao.getPromotionItemInfo();
+    }
+
+    public DisplayInfoItemDTO getDisplayInfoWithDisplayId(int displayId) {
+        return reservationDao.getDisplayInfoItemWithDisplayId(displayId);
+    }
+
+    public List<ProductImageDTO> getProductImageWithDisplayId(int displayId) {
+        return reservationDao.getProductImageWithDisplayId(displayId);
+    }
+
+    public List<DisplayInfoImageDTO> getDisplayInfoImageWithDisplayId(int displayId) {
+        return reservationDao.getDisplayInfoImages(displayId);
+    }
+
+    public int getAvgScoreWithDisplayId(int displayId) {
+        return reservationDao.getAvgScoreOfReservationUserComment(displayId);
+    }
+
+    public List<ProductPriceDTO> getProductPriceWithDisplayId(int displayId) {
+        return reservationDao.getProductPricesOrderByRateDesc(displayId);
     }
 
 }
