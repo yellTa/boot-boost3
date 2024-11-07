@@ -22,32 +22,29 @@ public class MainController {
     @GetMapping("/api/categories")
     public CategoryResponseDTO categoryResponse() {
         List<CategoryItemDTO> categoryWithProductCount = reservationService.getCategoryInfoWithProductCount();
-        CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO(categoryWithProductCount.size(),
+        return new CategoryResponseDTO(categoryWithProductCount.size(),
             categoryWithProductCount);
-        return categoryResponseDTO;
+
     }
 
     @GetMapping("/api/displayInfos")
-    public DisplayInfoResponseDTO displayInfos(@RequestParam(value = "categoryId", required = false) Integer categoryId,
+    public DisplayInfoResponseDTO displayInfos(
+        @RequestParam(value = "categoryId", required = false) int categoryId,
         @RequestParam(value = "start", defaultValue = "0") int start) {
 
         int allDisplayInfoCount = reservationService.getAllDisplayInfoCount(categoryId);
         List<DisplayInfoItemDTO> displayInfoWithStartNumber = reservationService.getDisplayInfoWithStartNumber(
             categoryId, start);
 
-        DisplayInfoResponseDTO displayInfoResponseDTO = new DisplayInfoResponseDTO(allDisplayInfoCount,
+        return new DisplayInfoResponseDTO(allDisplayInfoCount,
             displayInfoWithStartNumber.size(), displayInfoWithStartNumber);
-
-        return displayInfoResponseDTO;
     }
 
     @GetMapping("/api/promotions")
     public PromotionResponseDTO promotionList() {
         List<PromotionItemDTO> promotionItems = reservationService.getPromotionItems();
-        PromotionResponseDTO promotionResponseDTO = new PromotionResponseDTO(promotionItems.size(), promotionItems);
 
-        return promotionResponseDTO;
+        return new PromotionResponseDTO(promotionItems.size(), promotionItems);
     }
-
 
 }
