@@ -112,7 +112,7 @@ public class ReservationDao {
     }
 
     public int getCategoryDisplayItemInfoCount(int categoryId) {
-        Integer count = dsl.selectCount()
+        return dsl.selectCount()
             .from(DISPLAY_INFO)
             .join(PRODUCT)
             .on(DISPLAY_INFO.PRODUCT_ID.eq(PRODUCT.ID))
@@ -122,14 +122,12 @@ public class ReservationDao {
             .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
             .where(CATEGORY.ID.eq(categoryId)
                 .and(PRODUCT_IMAGE.TYPE.eq("ma")))
-            .fetchOneInto(Integer.class);
-
-        return count != null ? count : 0;
+            .fetchOne(0, int.class);
 
     }
 
     public int getAllDisplayItemInfoCount() {
-        Integer count = dsl.selectCount()
+        return dsl.selectCount()
             .from(DISPLAY_INFO)
             .join(PRODUCT)
             .on(DISPLAY_INFO.PRODUCT_ID.eq(PRODUCT.ID))
@@ -138,9 +136,7 @@ public class ReservationDao {
             .leftJoin(PRODUCT_IMAGE)
             .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
             .where(PRODUCT_IMAGE.TYPE.eq("ma"))
-            .fetchOneInto(Integer.class);
-
-        return count != null ? count : 0;
+            .fetchOne(0, int.class);
 
     }
 
@@ -246,12 +242,11 @@ public class ReservationDao {
     }
 
     public int getAvgScoreOfReservationUserComment(int displayId) {
-        Integer avgScore = dsl.select(DSL.floor(DSL.avg(RESERVATION_USER_COMMENT.SCORE))
+        return dsl.select(DSL.floor(DSL.avg(RESERVATION_USER_COMMENT.SCORE))
                 .as("average_score"))
             .from(RESERVATION_USER_COMMENT)
             .where(RESERVATION_USER_COMMENT.PRODUCT_ID.eq(1))
-            .fetchOneInto(Integer.class);
-        return avgScore != null ? avgScore : 0;
+            .fetchOne(0, int.class);
     }
 
     public List<ProductPriceDTO> getProductPricesOrderByRateDesc(int displayId) {
