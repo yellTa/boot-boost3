@@ -11,6 +11,7 @@ import static com.yeji.jooq.generated.tables.Promotion.PROMOTION;
 import static com.yeji.jooq.generated.tables.ReservationInfo.RESERVATION_INFO;
 import static com.yeji.jooq.generated.tables.ReservationUserComment.RESERVATION_USER_COMMENT;
 import static com.yeji.jooq.generated.tables.ReservationUserCommentImage.RESERVATION_USER_COMMENT_IMAGE;
+import static org.jooq.impl.DSL.count;
 
 import com.example.springboot3.Dto.CategoryItemDTO;
 import com.example.springboot3.Dto.DisplayInfoImageDTO;
@@ -36,12 +37,12 @@ public class ReservationDao {
         return dsl.select(
                 CATEGORY.ID.as("id"),
                 CATEGORY.NAME.as("name"),
-                dsl.selectCount()
-                    .from(PRODUCT)
-                    .where(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
-                    .asField("count")
+                count(PRODUCT.ID).as("count")
             )
             .from(CATEGORY)
+            .leftJoin(PRODUCT)
+            .on(CATEGORY.ID.eq(PRODUCT.CATEGORY_ID))
+            .groupBy(CATEGORY.ID, CATEGORY.NAME)
             .fetchInto(CategoryItemDTO.class);
     }
 
