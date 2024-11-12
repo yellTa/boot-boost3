@@ -29,10 +29,10 @@ public class ReservationService {
     public List<DisplayInfoItemDTO> getDisplayInfoWithStartNumber(int categoryId, int start) {
 
         List<DisplayInfoItemDTO> result = new ArrayList<>();
-        if (categoryId == 0) {
+        if (categoryId == NO_CATEGORY) {
             result = reservationDao.getAllDisplayItemInfo();
         }
-        if (categoryId != 0) {
+        if (categoryId != NO_CATEGORY) {
             result = reservationDao.getDisplayItemInfo(categoryId, start);
         }
         return result;

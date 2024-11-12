@@ -1,17 +1,17 @@
 package com.example.springboot3.Dao;
 
 import static com.example.springboot3.Const.MAIN_PICTURE;
-import static com.yeji.jooq.generated.tables.Category.CATEGORY;
-import static com.yeji.jooq.generated.tables.DisplayInfo.DISPLAY_INFO;
-import static com.yeji.jooq.generated.tables.DisplayInfoImage.DISPLAY_INFO_IMAGE;
-import static com.yeji.jooq.generated.tables.FileInfo.FILE_INFO;
-import static com.yeji.jooq.generated.tables.Product.PRODUCT;
-import static com.yeji.jooq.generated.tables.ProductImage.PRODUCT_IMAGE;
-import static com.yeji.jooq.generated.tables.ProductPrice.PRODUCT_PRICE;
-import static com.yeji.jooq.generated.tables.Promotion.PROMOTION;
-import static com.yeji.jooq.generated.tables.ReservationInfo.RESERVATION_INFO;
-import static com.yeji.jooq.generated.tables.ReservationUserComment.RESERVATION_USER_COMMENT;
-import static com.yeji.jooq.generated.tables.ReservationUserCommentImage.RESERVATION_USER_COMMENT_IMAGE;
+import static com.example.springboot3.TableAlias.C;
+import static com.example.springboot3.TableAlias.DI;
+import static com.example.springboot3.TableAlias.DII;
+import static com.example.springboot3.TableAlias.F;
+import static com.example.springboot3.TableAlias.P;
+import static com.example.springboot3.TableAlias.PI;
+import static com.example.springboot3.TableAlias.PR;
+import static com.example.springboot3.TableAlias.PRO;
+import static com.example.springboot3.TableAlias.RI;
+import static com.example.springboot3.TableAlias.RUC;
+import static com.example.springboot3.TableAlias.RUCI;
 import static org.jooq.impl.DSL.count;
 
 import com.example.springboot3.Dto.CategoryItemDTO;
@@ -36,260 +36,259 @@ public class ReservationDao {
 
     public List<CategoryItemDTO> getCategoryWithProductCount() {
         return dsl.select(
-                CATEGORY.ID.as("id"),
-                CATEGORY.NAME.as("name"),
-                count(PRODUCT.ID).as("count")
+                C.field("id").as("id"),
+                C.field("name").as("name"),
+                count(P.field("id")).as("count")
             )
-            .from(CATEGORY)
-            .leftJoin(PRODUCT)
-            .on(CATEGORY.ID.eq(PRODUCT.CATEGORY_ID))
-            .groupBy(CATEGORY.ID, CATEGORY.NAME)
+            .from(C)
+            .leftJoin(P)
+            .on(C.field("id", Integer.class).eq(P.field("category_id", Integer.class)))
+            .groupBy(C.field("id"), C.field("name"))
             .fetchInto(CategoryItemDTO.class);
     }
 
     public List<DisplayInfoItemDTO> getDisplayItemInfo(int categoryId, int start) {
         return dsl.select(
-                DISPLAY_INFO.ID.as("id"),
-                CATEGORY.ID.as("categoryId"),
-                DISPLAY_INFO.ID.as("displayInfo"),
-                CATEGORY.NAME.as("name"),
-                PRODUCT.DESCRIPTION.as("description"),
-                PRODUCT.CONTENT.as("content"),
-                PRODUCT.EVENT.as("event"),
-                DISPLAY_INFO.OPENING_HOURS.as("openingHours"),
-                DISPLAY_INFO.PLACE_NAME.as("placeName"),
-                DISPLAY_INFO.PLACE_LOT.as("placeLot"),
-                DISPLAY_INFO.PLACE_STREET.as("placeStreet"),
-                DISPLAY_INFO.TEL.as("tel"),
-                DISPLAY_INFO.HOMEPAGE.as("homepage"),
-                DISPLAY_INFO.EMAIL.as("email"),
-                DISPLAY_INFO.CREATE_DATE.as("createDate"),
-                DISPLAY_INFO.MODIFY_DATE.as("modifyDate"),
-                PRODUCT_IMAGE.FILE_ID.as("fileId")
+                DI.field("id").as("id"),
+                C.field("id").as("categoryId"),
+                DI.field("id").as("displayInfo"),
+                C.field("name").as("name"),
+                P.field("description").as("description"),
+                P.field("content").as("content"),
+                P.field("event").as("event"),
+                DI.field("opening_hours").as("openingHours"),
+                DI.field("place_name").as("placeName"),
+                DI.field("place_lot").as("placeLot"),
+                DI.field("place_street").as("placeStreet"),
+                DI.field("tel").as("tel"),
+                DI.field("homepage").as("homepage"),
+                DI.field("email").as("email"),
+                DI.field("create_date").as("createDate"),
+                DI.field("modify_date").as("modifyDate"),
+                PI.field("file_id").as("fileId")
             )
-            .from(DISPLAY_INFO)
-            .join(PRODUCT)
-            .on(DISPLAY_INFO.PRODUCT_ID.eq(PRODUCT.ID))
-            .join(CATEGORY)
-            .on(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
-            .leftJoin(PRODUCT_IMAGE)
-            .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
-            .where(CATEGORY.ID.eq(categoryId))
-            .and(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE))
+            .from(DI)
+            .join(P)
+            .on(DI.field("product_id", Integer.class).eq(P.field("id", Integer.class)))
+            .join(C)
+            .on(P.field("category_id",Integer.class).eq(C.field("id", Integer.class)))
+            .leftJoin(PI)
+            .on(P.field("id",Integer.class).eq(PI.field("product_id", Integer.class)))
+            .where(C.field("id",Integer.class).eq(categoryId))
+            .and(PI.field("type", String.class).eq(MAIN_PICTURE))
             .limit(4)
             .offset(start)
             .fetchInto(DisplayInfoItemDTO.class);
-
     }
 
     public List<DisplayInfoItemDTO> getAllDisplayItemInfo() {
         return dsl.select(
-                DISPLAY_INFO.ID.as("id"),
-                CATEGORY.ID.as("categoryId"),
-                DISPLAY_INFO.ID.as("displayInfo"),
-                CATEGORY.NAME.as("name"),
-                PRODUCT.DESCRIPTION.as("description"),
-                PRODUCT.CONTENT.as("content"),
-                PRODUCT.EVENT.as("event"),
-                DISPLAY_INFO.OPENING_HOURS.as("openingHours"),
-                DISPLAY_INFO.PLACE_NAME.as("placeName"),
-                DISPLAY_INFO.PLACE_LOT.as("placeLot"),
-                DISPLAY_INFO.PLACE_STREET.as("placeStreet"),
-                DISPLAY_INFO.TEL.as("tel"),
-                DISPLAY_INFO.HOMEPAGE.as("homepage"),
-                DISPLAY_INFO.EMAIL.as("email"),
-                DISPLAY_INFO.CREATE_DATE.as("createDate"),
-                DISPLAY_INFO.MODIFY_DATE.as("modifyDate"),
-                PRODUCT_IMAGE.FILE_ID.as("fileId")
+                DI.field("id").as("id"),
+                C.field("id").as("categoryId"),
+                DI.field("id").as("displayInfo"),
+                C.field("name").as("name"),
+                P.field("description").as("description"),
+                P.field("content").as("content"),
+                P.field("event").as("event"),
+                DI.field("opening_hours").as("openingHours"),
+                DI.field("place_name").as("placeName"),
+                DI.field("place_lot").as("placeLot"),
+                DI.field("place_street").as("placeStreet"),
+                DI.field("tel").as("tel"),
+                DI.field("homepage").as("homepage"),
+                DI.field("email").as("email"),
+                DI.field("create_date").as("createDate"),
+                DI.field("modify_date").as("modifyDate"),
+                PI.field("file_id").as("fileId")
             )
-            .from(DISPLAY_INFO)
-            .join(PRODUCT)
-            .on(DISPLAY_INFO.PRODUCT_ID.eq(PRODUCT.ID))
-            .leftJoin(CATEGORY)
-            .on(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
-            .leftJoin(PRODUCT_IMAGE)
-            .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
-            .where(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE))
+            .from(DI)
+            .join(P)
+            .on(DI.field("product_id" ,Integer.class).eq(P.field("id", Integer.class)))
+            .leftJoin(C)
+            .on(P.field("category_id", Integer.class).eq(C.field("id", Integer.class)))
+            .leftJoin(PI)
+            .on(P.field("id",Integer.class).eq(PI.field("product_id",Integer.class)))
+            .where(PI.field("type", String.class).eq(MAIN_PICTURE))
             .fetchInto(DisplayInfoItemDTO.class);
     }
 
     public int getCategoryDisplayItemInfoCount(int categoryId) {
         return dsl.selectCount()
-            .from(DISPLAY_INFO)
-            .join(PRODUCT)
-            .on(DISPLAY_INFO.PRODUCT_ID.eq(PRODUCT.ID))
-            .leftJoin(CATEGORY)
-            .on(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
-            .leftJoin(PRODUCT_IMAGE)
-            .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
-            .where(CATEGORY.ID.eq(categoryId)
-                .and(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE)))
+            .from(DI)
+            .join(P)
+            .on(DI.field("product_id", Integer.class).eq(P.field("id", Integer.class)))
+            .leftJoin(C)
+            .on(P.field("category_id", Integer.class).eq(C.field("id", Integer.class)))
+            .leftJoin(PI)
+            .on(P.field("id", Integer.class).eq(PI.field("product_id", Integer.class)))
+            .where(C.field("id", Integer.class).eq(categoryId)
+                .and(PI.field("type",String.class).eq(MAIN_PICTURE)))
             .fetchOne(0, int.class);
 
     }
 
     public int getAllDisplayItemInfoCount() {
         return dsl.selectCount()
-            .from(DISPLAY_INFO)
-            .join(PRODUCT)
-            .on(DISPLAY_INFO.PRODUCT_ID.eq(PRODUCT.ID))
-            .leftJoin(CATEGORY)
-            .on(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
-            .leftJoin(PRODUCT_IMAGE)
-            .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
-            .where(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE))
+            .from(DI)
+            .join(P)
+            .on(DI.field("product_id", Integer.class).eq(P.field("id", Integer.class)))
+            .leftJoin(C)
+            .on(P.field("category_id", Integer.class).eq(C.field("id", Integer.class)))
+            .leftJoin(PI)
+            .on(P.field("id", Integer.class).eq(PI.field("product_id", Integer.class)))
+            .where(PI.field("type", String.class).eq(MAIN_PICTURE))
             .fetchOne(0, int.class);
 
     }
 
     public List<PromotionItemDTO> getPromotionItemInfo() {
         return dsl.select(
-                PROMOTION.ID.as("id"),
-                PRODUCT.ID.as("productId"),
-                CATEGORY.ID.as("categoryId"),
-                CATEGORY.NAME.as("categoryName"),
-                PRODUCT.DESCRIPTION.as("description"),
-                PRODUCT_IMAGE.FILE_ID.as("field")
+                PRO.field("id").as("id"),
+                P.field("id").as("productId"),
+                C.field("id").as("categoryId"),
+                C.field("name").as("categoryName"),
+                P.field("description").as("description"),
+                PI.field("file_id").as("field")
             )
-            .from(CATEGORY)
-            .join(PRODUCT)
-            .on(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
-            .join(PRODUCT_IMAGE)
-            .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
-            .join(PROMOTION)
-            .on(PRODUCT.ID.eq(PROMOTION.PRODUCT_ID))
-            .where(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE))
+            .from(C)
+            .join(P)
+            .on(P.field("category_id", Integer.class).eq(C.field("id",Integer.class)))
+            .join(PI)
+            .on(P.field("id",Integer.class).eq(PI.field("product_id", Integer.class)))
+            .join(PRO)
+            .on(P.field("id", Integer.class).eq(PRO.field("product_id",Integer.class)))
+            .where(PI.field("type",String.class).eq(MAIN_PICTURE))
             .fetchInto(PromotionItemDTO.class);
     }
 
     public DisplayInfoItemDTO getDisplayInfoItemWithDisplayId(int displayId) {
         return dsl.select(
-                DISPLAY_INFO.ID.as("id"),
-                CATEGORY.ID.as("categoryId"),
-                DISPLAY_INFO.ID.as("displayInfo"),
-                CATEGORY.NAME.as("name"),
-                PRODUCT.DESCRIPTION.as("description"),
-                PRODUCT.CONTENT.as("content"),
-                PRODUCT.EVENT.as("event"),
-                DISPLAY_INFO.OPENING_HOURS.as("openingHours"),
-                DISPLAY_INFO.PLACE_NAME.as("placeName"),
-                DISPLAY_INFO.PLACE_LOT.as("placeLot"),
-                DISPLAY_INFO.PLACE_STREET.as("placeStreet"),
-                DISPLAY_INFO.TEL.as("tel"),
-                DISPLAY_INFO.HOMEPAGE.as("homepage"),
-                DISPLAY_INFO.EMAIL.as("email"),
-                DISPLAY_INFO.CREATE_DATE.as("createDate"),
-                DISPLAY_INFO.MODIFY_DATE.as("modifyDate"),
-                PRODUCT_IMAGE.FILE_ID.as("fileId")
+                DI.field("id").as("id"),
+                C.field("id").as("categoryId"),
+                DI.field("id").as("displayInfo"),
+                C.field("name").as("name"),
+                P.field("description").as("description"),
+                P.field("content").as("content"),
+                P.field("event").as("event"),
+                DI.field("opening_hours").as("openingHours"),
+                DI.field("place_name").as("placeName"),
+                DI.field("place_lot").as("placeLot"),
+                DI.field("place_street").as("placeStreet"),
+                DI.field("tel").as("tel"),
+                DI.field("homepage").as("homepage"),
+                DI.field("email").as("email"),
+                DI.field("create_date").as("createDate"),
+                DI.field("modify_date").as("modifyDate"),
+                PI.field("file_id").as("fileId")
             )
-            .from(DISPLAY_INFO)
-            .join(PRODUCT)
-            .on(DISPLAY_INFO.PRODUCT_ID.eq(PRODUCT.ID))
-            .join(CATEGORY)
-            .on(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
-            .leftJoin(PRODUCT_IMAGE)
-            .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID)
-                .and(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE)))
-            .where(PRODUCT.ID.eq(displayId))
+            .from(DI)
+            .join(P)
+            .on(DI.field("product_id",Integer.class).eq(P.field("id",Integer.class)))
+            .join(C)
+            .on(P.field("category_id", Integer.class).eq(C.field("id",Integer.class)))
+            .leftJoin(PI)
+            .on(P.field("id", Integer.class).eq(PI.field("product_id", Integer.class))
+                .and(PI.field("type", String.class).eq(MAIN_PICTURE)))
+            .where(P.field("id", Integer.class).eq(displayId))
             .fetchOneInto(DisplayInfoItemDTO.class);
     }
 
     public List<ProductImageDTO> getProductImageWithDisplayId(int displayId) {
         return dsl.select(
-                PRODUCT.ID.as("productId"),
-                PRODUCT_IMAGE.ID.as("productImageId"),
-                PRODUCT_IMAGE.TYPE.as("type"),
-                PRODUCT_IMAGE.FILE_ID.as("fileInfoId"),
-                FILE_INFO.FILE_NAME.as("fileName"),
-                FILE_INFO.SAVE_FILE_NAME.as("saveFileName"),
-                FILE_INFO.CONTENT_TYPE.as("contentType"),
-                FILE_INFO.DELETE_FLAG.as("deleteFlag"),
-                FILE_INFO.CREATE_DATE.as("createDate"),
-                FILE_INFO.MODIFY_DATE.as("modifyDate")
+                P.field("id").as("productId"),
+                PI.field("id").as("productImageId"),
+                PI.field("type").as("type"),
+                PI.field("file_id").as("fileInfoId"),
+                F.field("file_name").as("fileName"),
+                F.field("save_file_name").as("saveFileName"),
+                F.field("content_type").as("contentType"),
+                F.field("delete_flag").as("deleteFlag"),
+                F.field("create_date").as("createDate"),
+                F.field("modify_date").as("modifyDate")
             )
-            .from(PRODUCT_IMAGE)
-            .join(PRODUCT)
-            .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
-            .leftJoin(FILE_INFO)
-            .on(FILE_INFO.ID.eq(PRODUCT_IMAGE.FILE_ID))
-            .where(PRODUCT.ID.eq(displayId)
-                .and(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE)))
+            .from(PI)
+            .join(P)
+            .on(P.field("id", Integer.class).eq(PI.field("product_id", Integer.class)))
+            .leftJoin(F)
+            .on(F.field("id", Integer.class).eq(PI.field("file_id" , Integer.class)))
+            .where(P.field("id", Integer.class).eq(displayId)
+                .and(PI.field("type", String.class).eq(MAIN_PICTURE)))
             .fetchInto(ProductImageDTO.class);
     }
 
     public List<DisplayInfoImageDTO> getDisplayInfoImages(int displayId) {
         return dsl.select(
-                PRODUCT.ID.as("id"),
-                DISPLAY_INFO.ID.as("displayInfoId"),
-                DISPLAY_INFO_IMAGE.FILE_ID.as("fileId"),
-                FILE_INFO.FILE_NAME.as("fileName"),
-                FILE_INFO.SAVE_FILE_NAME.as("saveFileName"),
-                FILE_INFO.CONTENT_TYPE.as("contentType"),
-                FILE_INFO.DELETE_FLAG.as("deleteFlag"),
-                FILE_INFO.CREATE_DATE.as("createDate"),
-                FILE_INFO.MODIFY_DATE.as("modifyDate")
+                P.field("id").as("id"),
+                DI.field("id").as("displayInfoId"),
+                DII.field("file_id").as("fileId"),
+                F.field("file_name").as("fileName"),
+                F.field("save_file_name").as("saveFileName"),
+                F.field("content_type").as("contentType"),
+                F.field("delete_flag").as("deleteFlag"),
+                F.field("create_date").as("createDate"),
+                F.field("modify_date").as("modifyDate")
             )
-            .from(PRODUCT)
-            .join(DISPLAY_INFO)
-            .on(DISPLAY_INFO.ID.eq(PRODUCT.ID))
-            .join(DISPLAY_INFO_IMAGE)
-            .on(DISPLAY_INFO.ID.eq(DISPLAY_INFO_IMAGE.DISPLAY_INFO_ID))
-            .join(PRODUCT_IMAGE)
-            .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
-            .leftJoin(FILE_INFO)
-            .on(FILE_INFO.ID.eq(DISPLAY_INFO_IMAGE.FILE_ID))
-            .where(PRODUCT.ID.eq(1)
-                .and(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE)))
+            .from(P)
+            .join(DI)
+            .on(DI.field("id", Integer.class).eq(P.field("id", Integer.class)))
+            .join(DII)
+            .on(DI.field("id", Integer.class).eq(DII.field("display_info_id", Integer.class)))
+            .join(PI)
+            .on(P.field("id", Integer.class).eq(PI.field("product_id", Integer.class)))
+            .leftJoin(F)
+            .on(F.field("id", Integer.class).eq(DII.field("file_id", Integer.class)))
+            .where(P.field("id", Integer.class).eq(displayId)
+                .and(PI.field("type", String.class).eq(MAIN_PICTURE)))
             .fetchInto(DisplayInfoImageDTO.class);
     }
 
     public int getAvgScoreOfReservationUserComment(int displayId) {
-        return dsl.select(DSL.floor(DSL.avg(RESERVATION_USER_COMMENT.SCORE))
+        return dsl.select(DSL.floor(DSL.avg(RUC.field("score", Float.class)))
                 .as("average_score"))
-            .from(RESERVATION_USER_COMMENT)
-            .where(RESERVATION_USER_COMMENT.PRODUCT_ID.eq(displayId))
+            .from(RUC)
+            .where(RUC.field("product_id", Integer.class).eq(displayId))
             .fetchOne(0, int.class);
     }
 
     public List<ProductPriceDTO> getProductPricesOrderByRateDesc(int displayId) {
         return dsl.select(
-                PRODUCT_PRICE.ID.as("id"),
-                PRODUCT_PRICE.PRODUCT_ID.as("productId"),
-                PRODUCT_PRICE.PRICE_TYPE_NAME,
-                PRODUCT_PRICE.PRICE,
-                PRODUCT_PRICE.DISCOUNT_RATE.as("discountRate"),
-                PRODUCT_PRICE.CREATE_DATE.as("createDate"),
-                PRODUCT_PRICE.MODIFY_DATE.as("modifyDate")
+                PR.field("id").as("id"),
+                PR.field("product_id").as("productId"),
+                PR.field("price_type_name").as("priceTypeName"),
+                PR.field("price").as("price"),
+                PR.field("discount_rate").as("discountRate"),
+                PR.field("create_date").as("createDate"),
+                PR.field("modify_date").as("modifyDate")
             )
-            .from(PRODUCT_PRICE)
-            .where(PRODUCT_PRICE.PRODUCT_ID.eq(displayId))
-            .orderBy(PRODUCT_PRICE.DISCOUNT_RATE.desc())
+            .from(PR)
+            .where(PR.field("product_id", Integer.class).eq(displayId))
+            .orderBy(PR.field("discount_rate").desc())
             .fetchInto(ProductPriceDTO.class);
     }
 
     public int getCommentTotalCount() {
         return dsl.selectCount()
-            .from(RESERVATION_USER_COMMENT)
+            .from(RUC)
             .fetchOne(0, int.class);
     }
 
     public List<ReservationUserCommentDTO> getReservationUserCommentWithProductId(int productId, int start) {
         return dsl.select(
-                RESERVATION_USER_COMMENT.RESERVATION_INFO_ID.as("id"),
-                RESERVATION_INFO.PRODUCT_ID.as("productId"),
-                RESERVATION_USER_COMMENT.RESERVATION_INFO_ID.as("reservationInfoId"),
-                RESERVATION_USER_COMMENT.SCORE.as("score"),
-                RESERVATION_INFO.RESERVATION_EMAIL.as("email"),
-                RESERVATION_USER_COMMENT.COMMENT.as("comment"),
-                RESERVATION_USER_COMMENT.CREATE_DATE.as("createDate"),
-                RESERVATION_USER_COMMENT.MODIFY_DATE.as("modifyDate")
+                RUC.field("reservation_info_id").as("id"),
+                RI.field("product_id").as("productId"),
+                RUC.field("id").as("reservationInfoId"),
+                RUC.field("score").as("score"),
+                RI.field("reservation_email").as("email"),
+                RUC.field("comment").as("comment"),
+                RUC.field("create_date").as("createDate"),
+                RUC.field("modify_date").as("modifyDate")
             )
-            .from(RESERVATION_INFO)
-            .join(RESERVATION_USER_COMMENT)
-            .on(RESERVATION_INFO.PRODUCT_ID.eq(RESERVATION_USER_COMMENT.PRODUCT_ID)
-                .and(RESERVATION_INFO.ID.eq(RESERVATION_USER_COMMENT.RESERVATION_INFO_ID)))
-            .where(RESERVATION_INFO.PRODUCT_ID.eq(productId))
-            .orderBy(RESERVATION_USER_COMMENT.RESERVATION_INFO_ID.desc())
+            .from(RI)
+            .join(RUC)
+            .on(RI.field("product_id", Integer.class).eq(RUC.field("product_id", Integer.class))
+                .and(RI.field("id", Integer.class).eq(RUC.field("id", Integer.class))))
+            .where(RI.field("product_id" , Integer.class).eq(productId))
+            .orderBy(RUC.field("reservation_info_id", Integer.class).desc())
             .limit(5)
             .offset(start)
             .fetchInto(ReservationUserCommentDTO.class);
@@ -297,8 +296,8 @@ public class ReservationDao {
 
     public List<ReservationUserCommentImageDTO> getReservationUserCommentImageWithReservationInfoId(
         int reservationInfoId) {
-        return dsl.selectFrom(RESERVATION_USER_COMMENT_IMAGE)
-            .where(RESERVATION_USER_COMMENT_IMAGE.RESERVATION_INFO_ID.eq(reservationInfoId))
+        return dsl.selectFrom(RUCI)
+            .where(RUCI.field("reservation_info_id", Integer.class).eq(reservationInfoId))
             .fetchInto(ReservationUserCommentImageDTO.class);
     }
 }
