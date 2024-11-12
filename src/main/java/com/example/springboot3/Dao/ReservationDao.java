@@ -1,5 +1,6 @@
 package com.example.springboot3.Dao;
 
+import static com.example.springboot3.Const.MAIN_PICTURE;
 import static com.yeji.jooq.generated.tables.Category.CATEGORY;
 import static com.yeji.jooq.generated.tables.DisplayInfo.DISPLAY_INFO;
 import static com.yeji.jooq.generated.tables.DisplayInfoImage.DISPLAY_INFO_IMAGE;
@@ -74,7 +75,7 @@ public class ReservationDao {
             .leftJoin(PRODUCT_IMAGE)
             .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
             .where(CATEGORY.ID.eq(categoryId))
-            .and(PRODUCT_IMAGE.TYPE.eq("ma"))
+            .and(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE))
             .limit(4)
             .offset(start)
             .fetchInto(DisplayInfoItemDTO.class);
@@ -108,7 +109,7 @@ public class ReservationDao {
             .on(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
             .leftJoin(PRODUCT_IMAGE)
             .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
-            .where(PRODUCT_IMAGE.TYPE.eq("ma"))
+            .where(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE))
             .fetchInto(DisplayInfoItemDTO.class);
     }
 
@@ -122,7 +123,7 @@ public class ReservationDao {
             .leftJoin(PRODUCT_IMAGE)
             .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
             .where(CATEGORY.ID.eq(categoryId)
-                .and(PRODUCT_IMAGE.TYPE.eq("ma")))
+                .and(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE)))
             .fetchOne(0, int.class);
 
     }
@@ -136,7 +137,7 @@ public class ReservationDao {
             .on(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
             .leftJoin(PRODUCT_IMAGE)
             .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
-            .where(PRODUCT_IMAGE.TYPE.eq("ma"))
+            .where(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE))
             .fetchOne(0, int.class);
 
     }
@@ -157,7 +158,7 @@ public class ReservationDao {
             .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID))
             .join(PROMOTION)
             .on(PRODUCT.ID.eq(PROMOTION.PRODUCT_ID))
-            .where(PRODUCT_IMAGE.TYPE.eq("ma"))
+            .where(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE))
             .fetchInto(PromotionItemDTO.class);
     }
 
@@ -188,7 +189,7 @@ public class ReservationDao {
             .on(PRODUCT.CATEGORY_ID.eq(CATEGORY.ID))
             .leftJoin(PRODUCT_IMAGE)
             .on(PRODUCT.ID.eq(PRODUCT_IMAGE.PRODUCT_ID)
-                .and(PRODUCT_IMAGE.TYPE.eq("ma")))
+                .and(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE)))
             .where(PRODUCT.ID.eq(displayId))
             .fetchOneInto(DisplayInfoItemDTO.class);
     }
@@ -212,7 +213,7 @@ public class ReservationDao {
             .leftJoin(FILE_INFO)
             .on(FILE_INFO.ID.eq(PRODUCT_IMAGE.FILE_ID))
             .where(PRODUCT.ID.eq(displayId)
-                .and(PRODUCT_IMAGE.TYPE.eq("ma")))
+                .and(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE)))
             .fetchInto(ProductImageDTO.class);
     }
 
@@ -238,7 +239,7 @@ public class ReservationDao {
             .leftJoin(FILE_INFO)
             .on(FILE_INFO.ID.eq(DISPLAY_INFO_IMAGE.FILE_ID))
             .where(PRODUCT.ID.eq(1)
-                .and(PRODUCT_IMAGE.TYPE.eq("ma")))
+                .and(PRODUCT_IMAGE.TYPE.eq(MAIN_PICTURE)))
             .fetchInto(DisplayInfoImageDTO.class);
     }
 
@@ -246,7 +247,7 @@ public class ReservationDao {
         return dsl.select(DSL.floor(DSL.avg(RESERVATION_USER_COMMENT.SCORE))
                 .as("average_score"))
             .from(RESERVATION_USER_COMMENT)
-            .where(RESERVATION_USER_COMMENT.PRODUCT_ID.eq(1))
+            .where(RESERVATION_USER_COMMENT.PRODUCT_ID.eq(displayId))
             .fetchOne(0, int.class);
     }
 
@@ -267,10 +268,9 @@ public class ReservationDao {
     }
 
     public int getCommentTotalCount() {
-        Integer count = dsl.selectCount()
+        return dsl.selectCount()
             .from(RESERVATION_USER_COMMENT)
             .fetchOne(0, int.class);
-        return count != null ? count : 0;
     }
 
     public List<ReservationUserCommentDTO> getReservationUserCommentWithProductId(int productId, int start) {

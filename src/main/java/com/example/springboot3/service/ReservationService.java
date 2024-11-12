@@ -1,5 +1,7 @@
 package com.example.springboot3.service;
 
+import static com.example.springboot3.Const.NO_CATEGORY;
+
 import com.example.springboot3.Dao.ReservationDao;
 import com.example.springboot3.Dto.CategoryItemDTO;
 import com.example.springboot3.Dto.DisplayInfoImageDTO;
@@ -37,11 +39,11 @@ public class ReservationService {
     }
 
     public int getAllDisplayInfoCount(int categoryId) {
-        int result = 0;
-        if (categoryId == 0) {
+        int result = NO_CATEGORY;
+        if (categoryId == NO_CATEGORY) {
             result = reservationDao.getAllDisplayItemInfoCount();
         }
-        if (categoryId != 0) {
+        if (categoryId != NO_CATEGORY) {
             result = reservationDao.getCategoryDisplayItemInfoCount(categoryId);
         }
         return result;
