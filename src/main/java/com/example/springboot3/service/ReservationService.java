@@ -81,13 +81,13 @@ public class ReservationService {
         List<ReservationUserCommentDTO> reservationUserComments = reservationDao.getReservationUserCommentWithProductId(
             productId, start);
 
-        for (ReservationUserCommentDTO reservationUserComment : reservationUserComments) {
-            int reservationInfoId = reservationUserComment.getReservationInfoId();
+        reservationUserComments.stream().forEach(reservationUserComment -> {
+                int reservationInfoId = reservationUserComment.getReservationInfoId();
             List<ReservationUserCommentImageDTO> reservationUserCommentImages = reservationDao.getReservationUserCommentImageWithReservationInfoId(
                 reservationInfoId);
-
             reservationUserComment.setReservationUserCommentImages(reservationUserCommentImages);
-        }
+            });
+
         return reservationUserComments;
     }
 
