@@ -1,5 +1,6 @@
 package com.example.springboot3;
 
+import com.example.springboot3.handler.LoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class AppConfig {
 
+    private final LoginSuccessHandler loginSuccessHandler;
+
+    public AppConfig(LoginSuccessHandler loginSuccessHandler) {
+        this.loginSuccessHandler = loginSuccessHandler;
+    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -24,6 +30,7 @@ public class AppConfig {
                 .permitAll()
             )
             .formLogin((form) -> form.loginPage("/login")
+                .successHandler(loginSuccessHandler)
                 .permitAll())
             .logout((logout) -> logout
                     .logoutUrl("/logout")

@@ -11,6 +11,7 @@ import static com.yeji.jooq.generated.tables.Promotion.PROMOTION;
 import static com.yeji.jooq.generated.tables.ReservationInfo.RESERVATION_INFO;
 import static com.yeji.jooq.generated.tables.ReservationUserComment.RESERVATION_USER_COMMENT;
 import static com.yeji.jooq.generated.tables.ReservationUserCommentImage.RESERVATION_USER_COMMENT_IMAGE;
+import static com.yeji.jooq.generated.tables.Users.USERS;
 
 import org.jooq.Table;
 
@@ -27,6 +28,8 @@ public class TableAlias {
     public static final Table<?> PR =  PRODUCT_PRICE;
     public static final Table<?> RI =  RESERVATION_INFO;
     public static final Table<?> RUCI =  RESERVATION_USER_COMMENT_IMAGE;
+
+    public static final Table<?> U = USERS;
 
 
 }
