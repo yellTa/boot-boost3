@@ -23,13 +23,14 @@ public class TableAlias {
     public static final Table<?> PI = PRODUCT_IMAGE;
     public static final Table<?> PRO = PROMOTION;
     public static final Table<?> F = FILE_INFO;
-    public static final Table<?> DII =  DISPLAY_INFO_IMAGE;
-    public static final Table<?> RUC =  RESERVATION_USER_COMMENT;
-    public static final Table<?> PR =  PRODUCT_PRICE;
-    public static final Table<?> RI =  RESERVATION_INFO;
-    public static final Table<?> RUCI =  RESERVATION_USER_COMMENT_IMAGE;
-
+    public static final Table<?> DII = DISPLAY_INFO_IMAGE;
+    public static final Table<?> RUC = RESERVATION_USER_COMMENT;
+    public static final Table<?> PR = PRODUCT_PRICE;
+    public static final Table<?> RI = RESERVATION_INFO;
+    public static final Table<?> RUCI = RESERVATION_USER_COMMENT_IMAGE;
     public static final Table<?> U = USERS;
 
+    private TableAlias() {
 
+    }
 }

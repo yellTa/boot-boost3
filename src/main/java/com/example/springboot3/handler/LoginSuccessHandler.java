@@ -23,8 +23,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         Authentication authentication) throws IOException, ServletException {
 
         String username = authentication.getName();
-        int userid = userDao.getUserid(username);
-        UserDTO user = new UserDTO(userid, username);
+        int userId = userDao.getUserid(username);
+        UserDTO user = new UserDTO(userId, username);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

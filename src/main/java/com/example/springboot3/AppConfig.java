@@ -20,6 +20,7 @@ public class AppConfig {
     public AppConfig(LoginSuccessHandler loginSuccessHandler) {
         this.loginSuccessHandler = loginSuccessHandler;
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -33,9 +34,9 @@ public class AppConfig {
                 .successHandler(loginSuccessHandler)
                 .permitAll())
             .logout((logout) -> logout
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login")
-                    .permitAll());
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .permitAll());
         return http.build();
     }
 
