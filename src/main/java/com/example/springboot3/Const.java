@@ -7,4 +7,5 @@ public class Const {
 
     private Const() {
     }
+
 }
