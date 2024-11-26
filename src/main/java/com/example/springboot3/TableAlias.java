@@ -13,6 +13,7 @@ import static com.yeji.jooq.generated.tables.ReservationUserComment.RESERVATION_
 import static com.yeji.jooq.generated.tables.ReservationUserCommentImage.RESERVATION_USER_COMMENT_IMAGE;
 import static com.yeji.jooq.generated.tables.Users.USERS;
 
+import com.yeji.jooq.generated.tables.Users;
 import com.yeji.jooq.generated.tables.records.CategoryRecord;
 import com.yeji.jooq.generated.tables.records.DisplayInfoImageRecord;
 import com.yeji.jooq.generated.tables.records.DisplayInfoRecord;
@@ -24,7 +25,6 @@ import com.yeji.jooq.generated.tables.records.PromotionRecord;
 import com.yeji.jooq.generated.tables.records.ReservationInfoRecord;
 import com.yeji.jooq.generated.tables.records.ReservationUserCommentImageRecord;
 import com.yeji.jooq.generated.tables.records.ReservationUserCommentRecord;
-import com.yeji.jooq.generated.tables.records.UsersRecord;
 import org.jooq.Table;
 
 public class TableAlias {
@@ -40,9 +40,8 @@ public class TableAlias {
     public static final Table<ProductPriceRecord> PR = PRODUCT_PRICE;
     public static final Table<ReservationInfoRecord> RI = RESERVATION_INFO;
     public static final Table<ReservationUserCommentImageRecord> RUCI = RESERVATION_USER_COMMENT_IMAGE;
-    public static final Table<UsersRecord> U = USERS;
+    public static final Users U = USERS.as("U");
 
     private TableAlias() {
-
     }
 }

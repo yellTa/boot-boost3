@@ -1,92 +1,93 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.7'
-	id 'io.spring.dependency-management' version '1.1.6'
-	id 'nu.studer.jooq' version '8.2' // jOOQ code gen plugin
+    id 'java'
+    id 'org.springframework.boot' version '3.2.7'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'nu.studer.jooq' version '8.2' // jOOQ code gen plugin
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testCompileOnly 'org.projectlombok:lombok'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testCompileOnly 'org.projectlombok:lombok'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	//mysql connector 설정
-	implementation 'mysql:mysql-connector-java:8.0.33'
+    //mysql connector 설정
+    implementation 'mysql:mysql-connector-java:8.0.33'
 
-	// JOOQ
-	implementation 'org.springframework.boot:spring-boot-starter-jooq'
-	jooqGenerator 'mysql:mysql-connector-java:8.0.33'
+    // JOOQ
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    jooqGenerator 'mysql:mysql-connector-java:8.0.33'
 
-	// Jooq Code gen 의존성 추가
-	implementation group: 'org.jooq.jooq-codegen-gradle', name: 'org.jooq.jooq-codegen-gradle.gradle.plugin', version: '3.19.14', ext: 'pom'
+    // Jooq Code gen 의존성 추가
+    implementation group: 'org.jooq.jooq-codegen-gradle', name: 'org.jooq.jooq-codegen-gradle.gradle.plugin', version: '3.19.14', ext: 'pom'
 
     //swagger
     implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.3'
 
-	//Spring seucirty
-	implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security
+    //Spring seucirty
+    implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security
 
-	//thymeleaf
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // Thymeleaf dependency
+    //thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // Thymeleaf dependency
 }
 
 jooq {
-	version = dependencyManagement.importedProperties['jooq.version']
+    version = dependencyManagement.importedProperties['jooq.version']
 
-	configurations {
-		main {
-			generationTool {
-				logging = org.jooq.meta.jaxb.Logging.WARN
-				jdbc {
-					driver = 'com.mysql.cj.jdbc.Driver'
-					url = 'jdbc:mysql://localhost:3306/ch3'
-					user = 'boost'
-					password = 'boost'
-				}
-				generator {
-					name = 'org.jooq.codegen.DefaultGenerator'
-					database {
-						name = 'org.jooq.meta.mysql.MySQLDatabase'
-						inputSchema = 'ch3'
-						includes = '.*'
-						excludes = ''
-					}
-					target {
-						packageName = 'com.yeji.jooq.generated'
-						directory = 'build/generated-src/main/java'
-					}
-				}
-			}
-		}
-	}
+    configurations {
+        main {
+            generationTool {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    driver = 'com.mysql.cj.jdbc.Driver'
+                    url = 'jdbc:mysql://localhost:3306/ch3'
+                    user = 'boost'
+                    password = 'boost'
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.mysql.MySQLDatabase'
+                        inputSchema = 'ch3'
+                        includes = '.*'
+                        excludes = ''
+                    }
+                    target {
+                        packageName = 'com.yeji.jooq.generated'
+                        directory = 'build/generated-src/main/java'
+                    }
+                }
+            }
+        }
+    }
 }
 
 compileJava {
-	options.compilerArgs += ['-sourcepath', sourceSets.main.java.srcDirs.join(':')]
+    options.compilerArgs += ['-sourcepath', sourceSets.main.java.srcDirs.join(':')]
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

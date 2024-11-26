@@ -1,5 +1,6 @@
 package com.example.springboot3.Dto.response;
 
+import com.example.springboot3.Dto.ReservationInfoPriceDTO;
 import java.time.Instant;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class ReservationReponseDTO {
+public class ReservationResponseDTO {
 
     int id;
     int productId;
@@ -17,5 +18,5 @@ public class ReservationReponseDTO {
     Instant reservationDate;
     Instant createDate;
     Instant modifyDate;
-    List<pricesDTO> prices;
+    List<ReservationInfoPriceDTO> prices;
 }

@@ -7,12 +7,11 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class ReservationInfosDTO {
+public class ReservationInfosRequestDTO {
 
     int userId;
     LocalDate reservationYearMonthDay;
     int displayInfo;
     int productId;
-    List<RequestPricesDTO> prices;
-
+    List<Prices> prices;
 }
