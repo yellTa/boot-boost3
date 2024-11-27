@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 public class PricesDTO {
 
-    int reservationInfoId;
-    int productPriceId;
-    int count;
+    private int id;
+    private int reservationInfoId;
+    private int productPriceId;
+    private int count;
 }

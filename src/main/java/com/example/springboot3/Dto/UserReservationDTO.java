@@ -14,9 +14,9 @@ public class UserReservationDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
-    int userId;
-    int reservationInfoId;
+    private int id;
+    private int userId;
+    private int reservationInfoId;
 
     public UserReservationDTO(int userId, int reservationInfoId) {
         this.userId = userId;

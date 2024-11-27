@@ -7,11 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UserDTO {
 
-    int id;
-    String username;
-    String tel;
-    String email;
-    String name;
+    private int id;
+    private String username;
+    private String tel;
+    private String email;
+    private String name;
 
     public UserDTO(String name, String tel, String email) {
         this.name = name;

@@ -16,10 +16,10 @@ public class ReservationInfoPriceDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    int reservationInfoId;
-    int productPriceId;
-    int count;
+    private int id;
+    private int reservationInfoId;
+    private int productPriceId;
+    private int count;
 
     public ReservationInfoPriceDTO(int reservationInfoId, int productPriceId, int count) {
         this.reservationInfoId = reservationInfoId;

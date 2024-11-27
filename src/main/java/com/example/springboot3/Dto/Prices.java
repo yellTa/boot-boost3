@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 public class Prices {
 
-    int count;
-    int productPriceId;
+    private int count;
+    private int productPriceId;
 }

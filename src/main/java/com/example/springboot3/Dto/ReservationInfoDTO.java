@@ -17,16 +17,16 @@ public class ReservationInfoDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    int productId;
-    int displayInfoId;
-    String reservationName;
-    String reservationTel;
-    String reservationEmail;
-    LocalDate reservationDate;
-    int cancelFlag;
-    LocalDate createDate;
-    LocalDate modifyDate;
+    private int id;
+    private int productId;
+    private int displayInfoId;
+    private String reservationName;
+    private String reservationTel;
+    private String reservationEmail;
+    private LocalDate reservationDate;
+    private int cancelFlag;
+    private LocalDate createDate;
+    private LocalDate modifyDate;
 
     public ReservationInfoDTO(int productId, int displayInfoId, String reservationName, String reservationTel,
         String reservationEmail, LocalDate reservationDate, LocalDate createDate, LocalDate modifyDate) {

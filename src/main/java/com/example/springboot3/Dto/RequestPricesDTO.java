@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 public class RequestPricesDTO {
 
-    int count;
-    int productPriceId;
+    private int count;
+    private int productPriceId;
 }

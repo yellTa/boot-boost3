@@ -9,9 +9,9 @@ import lombok.Getter;
 @Getter
 public class ReservationInfosRequestDTO {
 
-    int userId;
-    LocalDate reservationYearMonthDay;
-    int displayInfo;
-    int productId;
-    List<Prices> prices;
+    private int userId;
+    private LocalDate reservationYearMonthDay;
+    private int displayInfo;
+    private int productId;
+    private List<Prices> prices;
 }
