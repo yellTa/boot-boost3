@@ -1,5 +1,6 @@
 package com.example.springboot3;
 
+import static com.yeji.jooq.generated.Tables.RESERVATION_INFO_PRICE;
 import static com.yeji.jooq.generated.tables.Category.CATEGORY;
 import static com.yeji.jooq.generated.tables.DisplayInfo.DISPLAY_INFO;
 import static com.yeji.jooq.generated.tables.DisplayInfoImage.DISPLAY_INFO_IMAGE;
@@ -23,6 +24,7 @@ import com.yeji.jooq.generated.tables.ProductImage;
 import com.yeji.jooq.generated.tables.ProductPrice;
 import com.yeji.jooq.generated.tables.Promotion;
 import com.yeji.jooq.generated.tables.ReservationInfo;
+import com.yeji.jooq.generated.tables.ReservationInfoPrice;
 import com.yeji.jooq.generated.tables.ReservationUserComment;
 import com.yeji.jooq.generated.tables.ReservationUserCommentImage;
 import com.yeji.jooq.generated.tables.UserReservation;
@@ -43,6 +45,7 @@ public class TableAlias {
     public static final ReservationUserCommentImage RUCI = RESERVATION_USER_COMMENT_IMAGE.as("RUCI");
     public static final Users U = USERS.as("U");
     public static final UserReservation UR = USER_RESERVATION.as("UR");
+    public static final ReservationInfoPrice RIP = RESERVATION_INFO_PRICE.as("RIP");
 
     private TableAlias() {
     }

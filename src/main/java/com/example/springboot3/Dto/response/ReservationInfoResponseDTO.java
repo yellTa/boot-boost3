@@ -19,4 +19,8 @@ public class ReservationInfoResponseDTO {
     private Timestamp createDate;
     private Timestamp modifyDate;
     private List<ReservationInfoPriceDTO> prices;
+
+    public void setPrices(List<ReservationInfoPriceDTO> prices) {
+        this.prices = prices;
+    }
 }
