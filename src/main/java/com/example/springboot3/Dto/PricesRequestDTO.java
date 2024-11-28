@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class Prices {
+public class PricesRequestDTO {
 
     private int count;
     private int productPriceId;

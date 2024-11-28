@@ -19,4 +19,9 @@ public class UserDTO {
         this.email = email;
     }
 
+    public UserDTO(int userId, String username) {
+        this.id = userId;
+        this.username = username;
+    }
+
 }

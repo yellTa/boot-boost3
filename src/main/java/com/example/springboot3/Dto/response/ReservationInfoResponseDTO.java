@@ -1,13 +1,15 @@
 package com.example.springboot3.Dto.response;
 
-import com.example.springboot3.Dto.ReservationInfoPriceDTO;
+import com.example.springboot3.Dto.JPAEntity.ReservationInfoPriceDTO;
 import java.sql.Timestamp;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Getter
+@NoArgsConstructor
 public class ReservationInfoResponseDTO {
 
     private int id;

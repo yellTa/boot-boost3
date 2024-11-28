@@ -1,14 +1,15 @@
-package com.example.springboot3.Dto;
+package com.example.springboot3.Dto.JPAEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+//JPA 전용 DTO
 @Entity
 @Table(name = "reservation_info")
 @NoArgsConstructor
@@ -23,13 +24,15 @@ public class ReservationInfoDTO {
     private String reservationName;
     private String reservationTel;
     private String reservationEmail;
-    private LocalDate reservationDate;
+    private LocalDateTime reservationDate;
     private int cancelFlag;
-    private LocalDate createDate;
-    private LocalDate modifyDate;
+    private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
 
-    public ReservationInfoDTO(int productId, int displayInfoId, String reservationName, String reservationTel,
-        String reservationEmail, LocalDate reservationDate, LocalDate createDate, LocalDate modifyDate) {
+    public ReservationInfoDTO(
+        int productId, int displayInfoId, String reservationName, String reservationTel,
+        String reservationEmail, LocalDateTime reservationDate, LocalDateTime createDate, LocalDateTime modifyDate
+    ) {
         this.productId = productId;
         this.displayInfoId = displayInfoId;
         this.reservationName = reservationName;
