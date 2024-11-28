@@ -1,6 +1,6 @@
 package com.example.springboot3.Dao.repository;
 
-import com.example.springboot3.Dto.UserReservationDTO;
+import com.example.springboot3.Dto.JPAEntity.UserReservationDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
