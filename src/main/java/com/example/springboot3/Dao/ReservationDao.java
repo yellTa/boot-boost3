@@ -684,9 +684,9 @@ public class ReservationDao {
 				  .fetchOneInto(UserDTO.class);
 	}
 
-	public int saveReservationInfo(ReservationInfoDTO reservationInfo) {
-		ReservationInfoDTO savedReservationInfo = reservationInfoRepository.save(reservationInfo);
-		return savedReservationInfo.getId();
+	public ReservationInfoDTO saveReservationInfo(ReservationInfoDTO reservationInfo) {
+		return reservationInfoRepository.save(reservationInfo);
+
 	}
 
 	public void saveReservationInfoPrice(ReservationInfoPriceDTO reservationInfoPrice) {
@@ -697,12 +697,11 @@ public class ReservationDao {
 		userReservationRepository.save(userReservationInfo);
 	}
 
-	public ReservationInfoDTO getSavedReservationResult(int reservationInfoId) {
-		return reservationInfoRepository.findById(reservationInfoId)
-										.get();
-	}
-
 	public ReservationInfoPriceDTO getReservationPriceInfo(int savedReservationInfoId) {
 		return reservationInfoPriceRepository.findByReservationInfoId(savedReservationInfoId);
+	}
+
+	public void deleteReservationInfo(ReservationInfoDTO savedReservationInfo) {
+		reservationInfoRepository.delete(savedReservationInfo);
 	}
 }
