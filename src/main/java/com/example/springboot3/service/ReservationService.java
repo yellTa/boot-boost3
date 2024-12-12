@@ -134,4 +134,11 @@ public class ReservationService {
 	public void deleteReservationInfo(ReservationInfoDTO savedReservationInfo) {
 		reservationDao.deleteReservationInfo(savedReservationInfo);
 	}
+
+	@Transactional
+	public void cancelReservation(int reservationId) {
+		ReservationInfoDTO reservationInfo = reservationDao.getReservationInfo(reservationId);
+		ReservationInfoDTO cancelledReservationInfo = dtoMapper.createCancelledReservationInfo(reservationInfo);
+		reservationDao.updateCancelFlag(cancelledReservationInfo);
+	}
 }

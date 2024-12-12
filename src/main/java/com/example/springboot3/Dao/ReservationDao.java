@@ -704,4 +704,14 @@ public class ReservationDao {
 	public void deleteReservationInfo(ReservationInfoDTO savedReservationInfo) {
 		reservationInfoRepository.delete(savedReservationInfo);
 	}
+
+	public ReservationInfoDTO getReservationInfo(int reservationId) {
+		return reservationInfoRepository.findById(reservationId)
+										.get();
+
+	}
+
+	public void updateCancelFlag(ReservationInfoDTO reservationInfo) {
+		reservationInfoRepository.save(reservationInfo);
+	}
 }

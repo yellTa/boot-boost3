@@ -1,5 +1,7 @@
 package com.example.springboot3.service.utils;
 
+import static com.example.springboot3.Const.*;
+
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -56,8 +58,7 @@ public class DTOMapper {
 		return reservationResult;
 	}
 
-	public UserReservationDTO createUserReservationInfo(ReservationInfosRequestDTO reservationInfosRequestDTO,
-		int savedReservationInfoId) {
+	public UserReservationDTO createUserReservationInfo(ReservationInfosRequestDTO reservationInfosRequestDTO, int savedReservationInfoId) {
 
 		ModelMapper modelMapper = new ModelMapper();
 
@@ -74,8 +75,7 @@ public class DTOMapper {
 		return modelMapper.map(reservationInfosRequestDTO, UserReservationDTO.class);
 	}
 
-	public ReservationInfoPriceDTO createReservationInfoPrice(ReservationInfosRequestDTO reservationInfosRequestDTO,
-		int savedReservationInfoId) {
+	public ReservationInfoPriceDTO createReservationInfoPrice(ReservationInfosRequestDTO reservationInfosRequestDTO, int savedReservationInfoId) {
 
 		PricesRequestDTO price = reservationInfosRequestDTO.getPrices()
 														   .getFirst();
@@ -111,8 +111,7 @@ public class DTOMapper {
 												.reservationName(reservedUser.getName())
 												.reservationTel(reservedUser.getTel())
 												.reservationEmail(reservedUser.getEmail())
-												.reservationDate(LocalDateTime.of(src.getReservationYearMonthDay(),
-													LocalTime.now()))
+												.reservationDate(LocalDateTime.of(src.getReservationYearMonthDay(), LocalTime.now()))
 												.createDate(LocalDateTime.of(LocalDate.now(), LocalTime.now()))
 												.modifyDate(LocalDateTime.of(LocalDate.now(), LocalTime.now()))
 												.build();
@@ -121,4 +120,28 @@ public class DTOMapper {
 		return modelMapper.map(reservationInfosRequest, ReservationInfoDTO.class);
 	}
 
+	public ReservationInfoDTO createCancelledReservationInfo(ReservationInfoDTO reservationInfo) {
+
+		ModelMapper modelMapper = new ModelMapper();
+
+		modelMapper.typeMap(ReservationInfosRequestDTO.class, ReservationInfoDTO.class)
+				   .setProvider(request -> {
+					   ReservationInfosRequestDTO src = (ReservationInfosRequestDTO)request.getSource();
+
+					   // ReservationInfoDTO 생성 및 반환
+					   return ReservationInfoDTO.builder()
+												.productId(src.getProductId())
+												.displayInfoId(src.getDisplayInfo())
+												.reservationName(reservationInfo.getReservationName())
+												.reservationTel(reservationInfo.getReservationTel())
+												.reservationEmail(reservationInfo.getReservationEmail())
+												.reservationDate(reservationInfo.getReservationDate())
+												.cancelFlag(CANCELLED)
+												.createDate(reservationInfo.getCreateDate())
+												.modifyDate(reservationInfo.getModifyDate())
+												.build();
+				   });
+
+		return modelMapper.map(reservationInfo, ReservationInfoDTO.class);
+	}
 }

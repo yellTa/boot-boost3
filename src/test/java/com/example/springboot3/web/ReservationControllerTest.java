@@ -1,9 +1,11 @@
 package com.example.springboot3.web;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -61,6 +63,20 @@ class ReservationControllerTest {
 		assertThat(res.getPrices()
 					  .getFirst()
 					  .getCount()).isEqualTo(3);
+	}
+
+	@Test
+	@DisplayName("reservation삭제")
+	public void testReservationDelete() {
+		//Given 데이터 생성
+		int reservationId = 44;
+
+		//when controller 실행될 때
+		Map<String, String> response = reservationController.deleteReservation(reservationId);
+
+		//결과
+		assertNotNull(response);
+		assertEquals("success", response.get("result"));
 	}
 
 }
