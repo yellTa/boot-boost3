@@ -4,6 +4,7 @@ import static com.example.springboot3.Const.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import com.example.springboot3.Dto.ProductPriceDTO;
 import com.example.springboot3.Dto.PromotionItemDTO;
 import com.example.springboot3.Dto.ReservationUserCommentDTO;
 import com.example.springboot3.Dto.ReservationUserCommentImageDTO;
+import com.example.springboot3.Dto.SavedReservationInfoDTO;
 import com.example.springboot3.customException.SaveReservationPriceAndUserReservationException;
 import com.example.springboot3.service.utils.DTOMapper;
 
@@ -143,5 +145,12 @@ public class ReservationService {
 
 	public List<Integer> getReservationIdList(int userId) {
 		return reservationDao.getReservationList(userId);
+	}
+
+	public List<SavedReservationInfoDTO> getReservationInfo(List<Integer> reservationList) {
+		List<SavedReservationInfoDTO> result = reservationList.stream()
+															  .map(reservationDao::getSavedReservationInfo)
+															  .collect(Collectors.toList());
+		return result;
 	}
 }

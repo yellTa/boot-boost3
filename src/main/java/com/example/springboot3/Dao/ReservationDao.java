@@ -24,6 +24,7 @@ import com.example.springboot3.Dto.ProductPriceDTO;
 import com.example.springboot3.Dto.PromotionItemDTO;
 import com.example.springboot3.Dto.ReservationUserCommentDTO;
 import com.example.springboot3.Dto.ReservationUserCommentImageDTO;
+import com.example.springboot3.Dto.SavedReservationInfoDTO;
 import com.example.springboot3.Dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -723,5 +724,25 @@ public class ReservationDao {
 				  .from(UR)
 				  .where(UR.USER_ID.eq(userId))
 				  .fetchInto(Integer.class);
+	}
+
+	public SavedReservationInfoDTO getSavedReservationInfo(int i) {
+		return dsl.select(
+					  RI.ID.as("reservationId"),
+					  RI.PRODUCT_ID.as("productId"),
+					  RI.DISPLAY_INFO_ID.as("displayInfoId"),
+					  RI.CANCEL_FLAG.as("cancelFlag"),
+					  P.DESCRIPTION.as("productDescription"),
+					  P.CONTENT.as("productContent"),
+					  RI.RESERVATION_DATE.as("reservationDate"),
+					  RI.CREATE_DATE.as("createDate"),
+					  RI.MODIFY_DATE.as("modifyDate")
+				  )
+				  .from(RI)
+				  .join(P)
+				  .on(P.ID.eq(RI.PRODUCT_ID))
+				  .where(RI.ID.eq(i))
+				  .fetchOneInto(SavedReservationInfoDTO.class);
+
 	}
 }
