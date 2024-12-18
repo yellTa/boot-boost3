@@ -614,7 +614,8 @@ public class ReservationDao {
 				  );
 	}
 
-	public List<ReservationUserCommentDTO> getReservationUserCommentWithProductId(int productId, int start) {
+	public List<ReservationUserCommentDTO> getReservationUserCommentWithProductId(int productId,
+		int start) {
 		return dsl.select(
 					  RUC.field("reservation_info_id")
 						 .as("id"),
@@ -713,5 +714,14 @@ public class ReservationDao {
 
 	public void updateCancelFlag(ReservationInfoDTO reservationInfo) {
 		reservationInfoRepository.save(reservationInfo);
+	}
+
+	public List<Integer> getReservationList(int userId) {
+		return dsl.select(
+					  UR.RESERVATION_INFO_ID
+				  )
+				  .from(UR)
+				  .where(UR.USER_ID.eq(userId))
+				  .fetchInto(Integer.class);
 	}
 }

@@ -92,8 +92,7 @@ public class ReservationService {
 	}
 
 	public List<ReservationUserCommentDTO> getReservationUserCommentWithProductId(int productId, int start) {
-		List<ReservationUserCommentDTO> reservationUserComments = reservationDao.getReservationUserCommentWithProductId(
-			productId, start);
+		List<ReservationUserCommentDTO> reservationUserComments = reservationDao.getReservationUserCommentWithProductId(productId, start);
 
 		reservationUserComments.forEach(reservationUserComment -> {
 			int reservationInfoId = reservationUserComment.getReservationInfoId();
@@ -140,5 +139,9 @@ public class ReservationService {
 		ReservationInfoDTO reservationInfo = reservationDao.getReservationInfo(reservationId);
 		ReservationInfoDTO cancelledReservationInfo = dtoMapper.createCancelledReservationInfo(reservationInfo);
 		reservationDao.updateCancelFlag(cancelledReservationInfo);
+	}
+
+	public List<Integer> getReservationIdList(int userId) {
+		return reservationDao.getReservationList(userId);
 	}
 }
