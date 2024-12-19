@@ -1,6 +1,6 @@
 package com.example.springboot3;
 
-import static com.yeji.jooq.generated.Tables.RESERVATION_INFO_PRICE;
+import static com.yeji.jooq.generated.Tables.*;
 import static com.yeji.jooq.generated.tables.Category.CATEGORY;
 import static com.yeji.jooq.generated.tables.DisplayInfo.DISPLAY_INFO;
 import static com.yeji.jooq.generated.tables.DisplayInfoImage.DISPLAY_INFO_IMAGE;
@@ -32,21 +32,22 @@ import com.yeji.jooq.generated.tables.Users;
 
 public class TableAlias {
 
-    public static final Category C = CATEGORY.as("C");
-    public static final Product P = PRODUCT.as("P");
-    public static final DisplayInfo DI = DISPLAY_INFO.as("DI");
-    public static final ProductImage PI = PRODUCT_IMAGE.as("PI");
-    public static final Promotion PRO = PROMOTION.as("PRO");
-    public static final FileInfo F = FILE_INFO.as("F");
-    public static final DisplayInfoImage DII = DISPLAY_INFO_IMAGE.as("DII");
-    public static final ReservationUserComment RUC = RESERVATION_USER_COMMENT.as("RUC");
-    public static final ProductPrice PR = PRODUCT_PRICE.as("PR");
-    public static final ReservationInfo RI = RESERVATION_INFO.as("RI");
-    public static final ReservationUserCommentImage RUCI = RESERVATION_USER_COMMENT_IMAGE.as("RUCI");
-    public static final Users U = USERS.as("U");
-    public static final UserReservation UR = USER_RESERVATION.as("UR");
-    public static final ReservationInfoPrice RIP = RESERVATION_INFO_PRICE.as("RIP");
+	public static final Category C = CATEGORY.as("C");
+	public static final Product P = PRODUCT.as("P");
+	public static final DisplayInfo DI = DISPLAY_INFO.as("DI");
+	public static final ProductImage PI = PRODUCT_IMAGE.as("PI");
+	public static final Promotion PRO = PROMOTION.as("PRO");
+	public static final FileInfo F = FILE_INFO.as("F");
+	public static final DisplayInfoImage DII = DISPLAY_INFO_IMAGE.as("DII");
+	public static final ReservationUserComment RUC = RESERVATION_USER_COMMENT.as("RUC");
+	public static final ProductPrice PR = PRODUCT_PRICE.as("PR");
+	public static final ReservationInfo RI = RESERVATION_INFO.as("RI");
+	public static final ReservationUserCommentImage RUCI = RESERVATION_USER_COMMENT_IMAGE.as("RUCI");
+	public static final Users U = USERS.as("U");
+	public static final UserReservation UR = USER_RESERVATION.as("UR");
+	public static final ReservationInfoPrice RIP = RESERVATION_INFO_PRICE.as("RIP");
+	public static final ProductPrice PP = PRODUCT_PRICE.as("PP");
 
-    private TableAlias() {
-    }
+	private TableAlias() {
+	}
 }

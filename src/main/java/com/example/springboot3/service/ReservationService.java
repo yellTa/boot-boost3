@@ -23,6 +23,7 @@ import com.example.springboot3.Dto.PromotionItemDTO;
 import com.example.springboot3.Dto.ReservationUserCommentDTO;
 import com.example.springboot3.Dto.ReservationUserCommentImageDTO;
 import com.example.springboot3.Dto.SavedReservationInfoDTO;
+import com.example.springboot3.Dto.SavedReservationPriceDTO;
 import com.example.springboot3.customException.SaveReservationPriceAndUserReservationException;
 import com.example.springboot3.service.utils.DTOMapper;
 
@@ -147,10 +148,15 @@ public class ReservationService {
 		return reservationDao.getReservationList(userId);
 	}
 
-	public List<SavedReservationInfoDTO> getReservationInfo(List<Integer> reservationList) {
-		List<SavedReservationInfoDTO> result = reservationList.stream()
-															  .map(reservationDao::getSavedReservationInfo)
-															  .collect(Collectors.toList());
-		return result;
+	public List<SavedReservationInfoDTO> getSavedReservationInfo(List<Integer> reservationList) {
+		return reservationList.stream()
+							  .map(reservationDao::getSavedReservationInfo)
+							  .collect(Collectors.toList());
+	}
+
+	public List<SavedReservationPriceDTO> getReservationInfoPrice(List<Integer> reservationList) {
+		return reservationList.stream()
+							  .map(reservationDao::getSavedReservationInfoPrice)
+							  .collect(Collectors.toList());
 	}
 }
