@@ -18,6 +18,9 @@ import com.example.springboot3.Dto.JPAEntity.ReservationInfoPriceDTO;
 import com.example.springboot3.Dto.JPAEntity.UserReservationDTO;
 import com.example.springboot3.Dto.PricesRequestDTO;
 import com.example.springboot3.Dto.ReservationInfosRequestDTO;
+import com.example.springboot3.Dto.SavedReservationInfoDTO;
+import com.example.springboot3.Dto.SavedReservationInfoWithPriceDTO;
+import com.example.springboot3.Dto.SavedReservationPriceDTO;
 import com.example.springboot3.Dto.UserDTO;
 import com.example.springboot3.Dto.response.ReservationInfoResponseDTO;
 
@@ -128,7 +131,6 @@ public class DTOMapper {
 				   .setProvider(request -> {
 					   ReservationInfosRequestDTO src = (ReservationInfosRequestDTO)request.getSource();
 
-					   // ReservationInfoDTO 생성 및 반환
 					   return ReservationInfoDTO.builder()
 												.productId(src.getProductId())
 												.displayInfoId(src.getDisplayInfo())
@@ -143,5 +145,35 @@ public class DTOMapper {
 				   });
 
 		return modelMapper.map(reservationInfo, ReservationInfoDTO.class);
+	}
+
+	public SavedReservationInfoWithPriceDTO createSavedReservationInfo(SavedReservationInfoDTO reservationInfo,
+		SavedReservationPriceDTO reservationInfoPrice, int userId) {
+
+		ModelMapper modelMapper = new ModelMapper();
+
+		modelMapper.typeMap(SavedReservationInfoDTO.class, SavedReservationInfoWithPriceDTO.class)
+				   .setProvider(request -> {
+					   SavedReservationInfoDTO src = (SavedReservationInfoDTO)request.getSource();
+
+					   return SavedReservationInfoWithPriceDTO.builder()
+															  .id(reservationInfo.getReservationId())
+															  .productId(reservationInfo.getProductId())
+															  .displayInfoId(reservationInfo.getDisplayInfoId())
+															  .cancelFlag(reservationInfo.getCancelFlag())
+															  .productDescription(reservationInfo.getProductDescription())
+															  .productContent(reservationInfo.getProductContent())
+															  .userId(userId)
+															  .reservationDate(reservationInfo.getReservationDate())
+															  .createDate(reservationInfo.getCreateDate())
+															  .modifyDate(reservationInfo.getModifyDate())
+															  .build();
+				   });
+
+		SavedReservationInfoWithPriceDTO initResult = modelMapper.map(reservationInfo, SavedReservationInfoWithPriceDTO.class);
+		return initResult.toBuilder()
+						 .sumPrice(reservationInfoPrice.getCount() * reservationInfoPrice.getPrice())
+						 .build();
+
 	}
 }

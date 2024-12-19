@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.springboot3.Dto.PricesRequestDTO;
@@ -79,4 +80,19 @@ class ReservationControllerTest {
 		assertEquals("success", response.get("result"));
 	}
 
+	@Test
+	@DisplayName("Reservation 확인 결과")
+	public void testReservationGet() throws JsonProcessingException {
+		//given 데이터 생성
+		int userId = 1;
+
+		//when controller에 요청하기
+		ResponseEntity<?> reservation = reservationController.getReservation(userId);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonOutput = objectMapper.writeValueAsString(reservation.getBody());
+
+		//결과
+		System.out.println(jsonOutput);
+	}
 }
