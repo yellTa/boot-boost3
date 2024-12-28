@@ -40,7 +40,3 @@ src/main/java/com/example/jooq
 
 ## jooq formatter
 .editorconfig
-
-## imageFiles
-src/main/resources/img
-src/main/resources/img_map
