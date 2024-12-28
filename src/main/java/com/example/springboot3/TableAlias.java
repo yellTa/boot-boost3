@@ -47,6 +47,7 @@ public class TableAlias {
 	public static final UserReservation UR = USER_RESERVATION.as("UR");
 	public static final ReservationInfoPrice RIP = RESERVATION_INFO_PRICE.as("RIP");
 	public static final ProductPrice PP = PRODUCT_PRICE.as("PP");
+	public static final FileInfo FI = FILE_INFO.as("FI");
 
 	private TableAlias() {
 	}
