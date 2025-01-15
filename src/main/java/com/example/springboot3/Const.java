@@ -6,7 +6,9 @@ public class Const {
 	public static final String MAIN_PICTURE = "ma";
 	public static final int CANCELLED = 1;
 	public static final String IMAGE_PATH = "src/main/resources/";
+	public static final String COMMENT_IMAGE_PATH = "src/main/resources/comment";
 
 	private Const() {
 	}
+
 }

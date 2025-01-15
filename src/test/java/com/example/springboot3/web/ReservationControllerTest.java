@@ -83,16 +83,17 @@ class ReservationControllerTest {
 	@Test
 	@DisplayName("Reservation 확인 결과")
 	public void testReservationGet() throws JsonProcessingException {
-		//given 데이터 생성
+		//given
 		int userId = 1;
 
-		//when controller에 요청하기
+		//when
 		ResponseEntity<?> reservation = reservationController.getReservation(userId);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonOutput = objectMapper.writeValueAsString(reservation.getBody());
 
-		//결과
+		//then
 		System.out.println(jsonOutput);
 	}
+
 }
