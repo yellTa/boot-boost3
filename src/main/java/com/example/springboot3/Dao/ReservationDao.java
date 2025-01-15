@@ -759,4 +759,15 @@ public class ReservationDao {
 				  .where(RIP.RESERVATION_INFO_ID.eq(reservationId))
 				  .fetchOneInto(SavedReservationPriceDTO.class);
 	}
+
+	public int getProductId(int reservationInfoId) {
+		return dsl.select(
+					  RI.PRODUCT_ID
+				  )
+				  .from(RI)
+				  .where(RI.ID.eq(reservationInfoId))
+				  .fetchOneInto(Integer.class);
+
+	}
+
 }
